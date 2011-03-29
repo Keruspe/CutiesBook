@@ -1,7 +1,7 @@
 /*
  * CutiesBook - Get a trace of passed dates
  *
- * Copyright © 2011 Sardem FF7
+ * Copyright © 2011 Marc-Antoine Perennou <Marc-Antoine@Perennou.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,3 +16,39 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
+#ifndef __CUTIESBOOK_LIST_HPP__
+#define __CUTIESBOOK_LIST_HPP__
+
+#include "contact.hpp"
+
+#include <set>
+
+//! The list class
+/*!
+ * This class will be used to store a list of contacts
+ */
+namespace CutiesBook
+{
+	class List : public QObject
+	{
+	public:
+		//! Get the contacts list
+		std::set< Contact * > getContacts() { return contacts; }
+		
+		//! Add a contact
+		void addContact(Contact *contact);
+		
+		//! Delete a contact
+		void deleteContact(Contact *contact);
+		
+		List(std::string name);
+		virtual ~List();
+	
+	private:
+		std::string name;
+		std::set< Contact * > contacts;
+	};
+}
+
+#endif /* __CUTIESBOOK_LIST_HPP__ */

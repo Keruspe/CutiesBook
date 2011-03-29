@@ -9,6 +9,7 @@ SOURCES += \
 	src/contact.cpp \
 	src/directory.cpp \
 	src/individual.cpp \
+	src/list.cpp \
 	src/mainwindow.cpp \
 	src/main.cpp \
 	src/number.cpp
@@ -19,6 +20,7 @@ HEADERS += \
 	src/contact.hpp \
 	src/directory.hpp \
 	src/individual.hpp \
+	src/list.hpp \
 	src/mainwindow.hpp \
 	src/number.hpp
 

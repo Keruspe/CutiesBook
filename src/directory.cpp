@@ -47,6 +47,24 @@ void
 Directory::deleteContact(Contact *contact)
 {
 	contacts.erase(contact);
+	for (std::set< List * >::iterator i = lists.begin() ; i != lists.end() ; ++i)
+	{
+		(*i)->deleteContact(contact);
+	}
+	delete contact;
+}
+
+void
+Directory::addList(List *list)
+{
+	lists.insert(list);
+}
+
+void
+Directory::deleteList(List *list)
+{
+	lists.erase(list);
+	delete list;
 }
 
 Directory::Directory() :
@@ -57,6 +75,10 @@ Directory::Directory() :
 Directory::~Directory()
 {
 	for (std::set< Contact * >::iterator i = contacts.begin() ; i != contacts.end() ; ++i)
+	{
+		delete *i;
+	}
+	for (std::set< List * >::iterator i = lists.begin() ; i != lists.end() ; ++i)
 	{
 		delete *i;
 	}

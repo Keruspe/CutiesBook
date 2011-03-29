@@ -20,10 +20,9 @@
 #ifndef __CUTIESBOOK_DIRECTORY_HPP__
 #define __CUTIESBOOK_DIRECTORY_HPP__
 
-#include "contact.hpp"
+#include "list.hpp"
 
 #include <set>
-#include <string>
 
 //! The directory class
 /*!
@@ -63,10 +62,20 @@ namespace CutiesBook
 		
 		//! Delete a contact
 		void deleteContact(Contact *contact);
+		
+		//! Get the lists
+		std::set< List * > getLists() { return lists; }
+		
+		//! Add a list
+		void addList(List *list);
+		
+		//! Delete a list
+		void deleteList(List *list);
 	
 	private:
 		static Directory *instance;
 		std::set< Contact * > contacts;
+		std::set< List * > lists;
 		
 		Directory();
 		virtual ~Directory();
