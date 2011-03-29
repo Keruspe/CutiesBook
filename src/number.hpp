@@ -38,27 +38,27 @@ namespace CutiesBook
 			MOBILE,
 			FAX
 		};
-		
+
 		//! Set this number as professionnal
 		void setProfessional() { professionnal = true; }
 		//! Set this number as personnal
 		void setPersonnal() { professionnal = false; }
-		
+
 		//! Is this number professionnal ?
 		bool isProfessionnal() { return professionnal; }
 		//! Is this number personnal ?
 		bool isPersonnal() { return !professionnal; }
-		
+
 		//! Get the number
 		std::string getNumber() { return number; }
 		//! Get the type of this phone number
 		phoneType getType() { return type; }
-		
+
 		//! Set the number
 		void setNumber(std::string number) { this->number = number; }
 		//! Set the type of this phone number
 		void setType(phoneType type) { this->type = type; }
-		
+
 		Number(std::string number, Number::phoneType type, bool professional = false);
 		virtual ~Number();
 	private:

@@ -47,36 +47,36 @@ namespace CutiesBook
 			if ( Directory::instance )
 				delete Directory::instance;
 		}
-		
+
 		//! Load contacts from disk
 		void loadContacts(std::string path);
-		
+
 		//! Save contacts to disk
 		void saveContacts(std::string path);
-		
+
 		//! Get the contacts list
 		std::set< Contact * > getContacts() { return contacts; }
-		
+
 		//! Add a contact
 		void addContact(Contact *contact);
-		
+
 		//! Delete a contact
 		void deleteContact(Contact *contact);
-		
+
 		//! Get the lists
 		std::set< List * > getLists() { return lists; }
-		
+
 		//! Add a list
 		void addList(List *list);
-		
+
 		//! Delete a list
 		void deleteList(List *list);
-	
+
 	private:
 		static Directory *instance;
 		std::set< Contact * > contacts;
 		std::set< List * > lists;
-		
+
 		Directory();
 		virtual ~Directory();
 	};

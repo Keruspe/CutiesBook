@@ -35,16 +35,16 @@ namespace CutiesBook
 	public:
 		//! Get the contacts list
 		std::set< Contact * > getContacts() { return contacts; }
-		
+
 		//! Add a contact
 		void addContact(Contact *contact);
-		
+
 		//! Delete a contact
 		void deleteContact(Contact *contact);
-		
+
 		List(std::string name);
 		virtual ~List();
-	
+
 	private:
 		std::string name;
 		std::set< Contact * > contacts;

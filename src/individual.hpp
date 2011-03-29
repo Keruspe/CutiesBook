@@ -38,14 +38,14 @@ namespace CutiesBook
 		std::string getFirstName() { return firstName; }
 		//! Get the Individual birthday
 		std::string getBirthday() { return lastName; }
-	
+
 		//! Set the Individual lastName
 		void setLastName(std::string lastName) { this->lastName = lastName; }
 		//! Set the Individual firstName
 		void setFirstName(std::string firstName) { this->firstName = firstName; }
 		//! Set the Individual birthday
 		void setBirthday(std::string birthday) { this->birthday = birthday; }
-	
+
 		Individual(std::string lastName, std::string firstName, std::string birthday, std::set< Number * > numbers, std::string address = "", std::string email = "");
 		virtual ~Individual();
 	private:
