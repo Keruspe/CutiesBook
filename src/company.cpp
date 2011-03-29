@@ -17,35 +17,17 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "contact.hpp"
+#include "company.hpp"
 
 using namespace CutiesBook;
 
-void
-Contact::addNumber(Number *number)
-{
-	numbers.insert(number);
-}
-
-void
-Contact::deleteNumber(Number *number)
-{
-	numbers.erase(number);
-	delete number;
-}
-
-Contact::Contact(std::set< Number * > &_numbers, std::string _address, std::string _email) :
-	QObject(),
-	numbers(_numbers),
-	address(_address),
-	email(_email)
+Company::Company(long _siret, std::string _website, std::set< Number * > &numbers, std::string address, std::string email) :
+	Contact(numbers, address, email),
+	siret(_siret),
+	website(_website)
 {
 }
 
-Contact::~Contact()
+Company::~Company()
 {
-	for (std::set< Number * >::iterator i = numbers.begin() ; i != numbers.end() ; ++i)
-	{
-		delete *i;
-	}
 }

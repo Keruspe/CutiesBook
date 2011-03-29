@@ -17,34 +17,46 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "contact.hpp"
+#include "directory.hpp"
 
 using namespace CutiesBook;
 
-void
-Contact::addNumber(Number *number)
-{
-	numbers.insert(number);
-}
+Directory *Directory::instance = 0;
 
 void
-Contact::deleteNumber(Number *number)
+Directory::loadContacts(std::string path)
 {
-	numbers.erase(number);
-	delete number;
+	(void) path;
+	/* TODO: */
 }
 
-Contact::Contact(std::set< Number * > &_numbers, std::string _address, std::string _email) :
-	QObject(),
-	numbers(_numbers),
-	address(_address),
-	email(_email)
+void
+Directory::saveContacts(std::string path)
+{
+	(void) path;
+	/* TODO: */
+}
+
+void
+Directory::addContact(Contact *contact)
+{
+	contacts.insert(contact);
+}
+
+void
+Directory::deleteContact(Contact *contact)
+{
+	contacts.erase(contact);
+}
+
+Directory::Directory() :
+	QObject()
 {
 }
 
-Contact::~Contact()
+Directory::~Directory()
 {
-	for (std::set< Number * >::iterator i = numbers.begin() ; i != numbers.end() ; ++i)
+	for (std::set< Contact * >::iterator i = contacts.begin() ; i != contacts.end() ; ++i)
 	{
 		delete *i;
 	}

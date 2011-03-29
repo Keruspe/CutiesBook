@@ -5,12 +5,22 @@ INCLUDEPATH += . src
 
 SOURCES += \
 	src/application.cpp \
+	src/company.cpp \
+	src/contact.cpp \
+	src/directory.cpp \
+	src/individual.cpp \
 	src/mainwindow.cpp \
-	src/main.cpp
+	src/main.cpp \
+	src/number.cpp
 
 HEADERS += \
 	src/application.hpp \
-	src/mainwindow.hpp
+	src/company.hpp \
+	src/contact.hpp \
+	src/directory.hpp \
+	src/individual.hpp \
+	src/mainwindow.hpp \
+	src/number.hpp
 
 
 unix {
