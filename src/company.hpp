@@ -35,14 +35,14 @@ namespace CutiesBook
 		//! Get the Company SIRET
 		long getSiret() { return siret; }
 		//! Get the Company website
-		std::string getWebsite() { return website; }
+		std::string &getWebsite() { return website; }
 
 		//! Set the Company SIRET
 		void setSiret(long siret) { this->siret = siret; }
 		//! Set the Company website
-		void setWebsite(std::string website) { this->website = website; }
+		void setWebsite(std::string &website) { this->website = website; }
 
-		Company(long siret, std::string website, std::set< Number * > &numbers, std::string address = "", std::string email = "");
+		Company(long siret, std::string &website, std::set< Number * > &numbers, std::string address = "", std::string email = "");
 		virtual ~Company();
 	private:
 		long siret;

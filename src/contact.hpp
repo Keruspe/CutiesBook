@@ -40,16 +40,16 @@ namespace CutiesBook
 		void deleteNumber(Number *number);
 
 		//! Get the contact address
-		std::string getAddress() { return address; }
+		std::string &getAddress() { return address; }
 		//! Get the contact email
-		std::string getEmail() { return email; }
+		std::string &getEmail() { return email; }
 
 		//! Set the contact address
-		void setAddress(std::string address) { this->address = address; }
+		void setAddress(std::string &address) { this->address = address; }
 		//! Set the contact email
-		void setEmail(std::string email) { this->email = email; }
+		void setEmail(std::string &email) { this->email = email; }
 
-		Contact(std::set< Number * > &numbers, std::string address, std::string email);
+		Contact(std::set< Number * > &numbers, std::string &address, std::string &email);
 		virtual ~Contact();
 	private:
 		std::set< Number * > numbers;

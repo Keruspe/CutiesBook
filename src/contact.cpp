@@ -34,7 +34,7 @@ Contact::deleteNumber(Number *number)
 	delete number;
 }
 
-Contact::Contact(std::set< Number * > &_numbers, std::string _address, std::string _email) :
+Contact::Contact(std::set< Number * > &_numbers, std::string &_address, std::string &_email) :
 	QObject(),
 	numbers(_numbers),
 	address(_address),

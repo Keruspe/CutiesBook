@@ -55,7 +55,7 @@ namespace CutiesBook
 		void saveContacts(std::string path);
 
 		//! Get the contacts list
-		std::set< Contact * > getContacts() { return contacts; }
+		std::set< Contact * > &getContacts() { return contacts; }
 
 		//! Add a contact
 		void addContact(Contact *contact);
@@ -64,7 +64,7 @@ namespace CutiesBook
 		void deleteContact(Contact *contact);
 
 		//! Get the lists
-		std::set< List * > getLists() { return lists; }
+		std::set< List * > &getLists() { return lists; }
 
 		//! Add a list
 		void addList(List *list);

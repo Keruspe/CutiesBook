@@ -33,7 +33,7 @@ List::deleteContact(Contact *contact)
 	contacts.erase(contact);
 }
 
-List::List(std::string _name) :
+List::List(std::string &_name) :
 	QObject(),
 	name(_name)
 {

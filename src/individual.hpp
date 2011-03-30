@@ -35,20 +35,20 @@ namespace CutiesBook
 	{
 	public:
 		//! Get the Individual lastName
-		std::string getLastName() { return lastName; }
+		std::string &getLastName() { return lastName; }
 		//! Get the Individual firstName
-		std::string getFirstName() { return firstName; }
+		std::string &getFirstName() { return firstName; }
 		//! Get the Individual birthday
-		QDate getBirthday() { return birthday; }
+		QDate &getBirthday() { return birthday; }
 
 		//! Set the Individual lastName
-		void setLastName(std::string lastName) { this->lastName = lastName; }
+		void setLastName(std::string &lastName) { this->lastName = lastName; }
 		//! Set the Individual firstName
-		void setFirstName(std::string firstName) { this->firstName = firstName; }
+		void setFirstName(std::string &firstName) { this->firstName = firstName; }
 		//! Set the Individual birthday
-		void setBirthday(QDate birthday) { this->birthday = birthday; }
+		void setBirthday(QDate &birthday) { this->birthday = birthday; }
 
-		Individual(std::string lastName, std::string firstName, QDate birthday, std::set< Number * > numbers, std::string address = "", std::string email = "");
+		Individual(std::string &lastName, std::string &firstName, QDate &birthday, std::set< Number * > &numbers, std::string address = "", std::string email = "");
 		virtual ~Individual();
 	private:
 		std::string lastName;

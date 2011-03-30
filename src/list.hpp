@@ -34,7 +34,7 @@ namespace CutiesBook
 	{
 	public:
 		//! Get the contacts list
-		std::set< Contact * > getContacts() { return contacts; }
+		std::set< Contact * > &getContacts() { return contacts; }
 
 		//! Add a contact
 		void addContact(Contact *contact);
@@ -42,7 +42,13 @@ namespace CutiesBook
 		//! Delete a contact
 		void deleteContact(Contact *contact);
 
-		List(std::string name);
+		//! Set the list name
+		void setName(std::string &name) { this->name = name; }
+
+		//! Get the list name
+		std::string &getName() { return name; }
+
+		List(std::string &name);
 		virtual ~List();
 
 	private:
