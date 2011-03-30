@@ -22,6 +22,8 @@
 
 #include "contact.hpp"
 
+#include <QDate>
+
 //! The individual class
 /*!
  * This class will be used to store informations
@@ -37,21 +39,21 @@ namespace CutiesBook
 		//! Get the Individual firstName
 		std::string getFirstName() { return firstName; }
 		//! Get the Individual birthday
-		std::string getBirthday() { return lastName; }
+		QDate getBirthday() { return birthday; }
 
 		//! Set the Individual lastName
 		void setLastName(std::string lastName) { this->lastName = lastName; }
 		//! Set the Individual firstName
 		void setFirstName(std::string firstName) { this->firstName = firstName; }
 		//! Set the Individual birthday
-		void setBirthday(std::string birthday) { this->birthday = birthday; }
+		void setBirthday(QDate birthday) { this->birthday = birthday; }
 
-		Individual(std::string lastName, std::string firstName, std::string birthday, std::set< Number * > numbers, std::string address = "", std::string email = "");
+		Individual(std::string lastName, std::string firstName, QDate birthday, std::set< Number * > numbers, std::string address = "", std::string email = "");
 		virtual ~Individual();
 	private:
 		std::string lastName;
 		std::string firstName;
-		std::string birthday; /* TODO: date */
+		QDate birthday;
 		void makeMeAbstractPlease() {}
 	};
 }

@@ -21,7 +21,7 @@
 
 using namespace CutiesBook;
 
-Individual::Individual(std::string _lastName, std::string _firstName, std::string _birthday, std::set< Number * > numbers, std::string address, std::string email) :
+Individual::Individual(std::string _lastName, std::string _firstName, QDate _birthday, std::set< Number * > numbers, std::string address, std::string email) :
 	Contact(numbers, address, email),
 	lastName(_lastName),
 	firstName(_firstName),
