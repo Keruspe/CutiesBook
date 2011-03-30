@@ -22,9 +22,6 @@
 #include "individual.hpp"
 
 #include <QFile>
-#include <QTextStream>
-
-#include <iostream>
 
 using namespace CutiesBook;
 
@@ -46,49 +43,66 @@ Directory::save(const QString &path)
 	if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
 		throw IOException();
 	QTextStream out(&file);
+	writeContacts(out, contacts);
+	out << "LISTS\n";
+	out << "#: " << lists.size() << "\n";
+	for (QSet< List * >::const_iterator i = lists.begin() ; i != lists.end() ; ++i)
+	{
+		out << "LIST\n";
+		out << "END OF LIST\n";
+	}
+	out << "END OF LISTS\n";
+	file.close();
+}
+
+void
+Directory::writeContact(QTextStream &out, const Contact *contact) const
+{
+	out << "CONTACT\n";
+	out << "NUMBERS\n";
+	out << "#: " << contact->getNumbers().size() << "\n";
+	for (QSet< Number * >::const_iterator i = contact->getNumbers().begin() ; i != contact->getNumbers().end() ; ++i)
+	{
+		out << "NUMBER\n";
+		out << "N: " << (*i)->getNumber();
+		out << "T: " << (*i)->getType();
+		out << "P: " << (*i)->isProfessionnal();
+		out << "END OF NUMBER\n";
+	}
+	out << "END OF NUMBERS\n";
+	out << "A: " << contact->getAddress() << "\n";
+	out << "E: " << contact->getEmail() << "\n";
+	if (contact->getType() == Contact::COMPANY)
+	{
+		out << "COMPANY\n";
+		const Company *c = static_cast< const Company * >(contact);
+		out << "S: " << c->getSiret() << "\n";
+		out << "W: " << c->getWebsite() << "\n";
+	}
+	else
+	{
+		out << "INDIVIDUAL\n";
+		const Individual *i = static_cast< const Individual * >(contact);
+		out << "L: " << i->getLastName() << "\n";
+		out << "F: " << i->getFirstName() << "\n";
+		const QDate &date = i->getBirthday();
+		out << "D: " << date.day();
+		out << "M: " << date.month();
+		out << "Y: " << date.year();
+	}
+	out << "END OF CONTACT\n";
+}
+
+void
+Directory::writeContacts(QTextStream &out, const QSet< Contact * > &contacts) const
+{
 	out << "CONTACTS\n";
 	out << "#: " << contacts.size() << "\n";
 	for (QSet< Contact * >::const_iterator i = contacts.begin() ; i != contacts.end() ; ++i)
 	{
-		out << "CONTACT\n";
-		out << "NUMBERS\n";
-		out << "#: " << (*i)->getNumbers().size() << "\n";
-		for (QSet< Number * >::const_iterator j = (*i)->getNumbers().begin() ; j != (*i)->getNumbers().end() ; ++j)
-		{
-			out << "NUMBER\n";
-			out << "N: " << (*j)->getNumber();
-			out << "T: " << (*j)->getType();
-			out << "P: " << (*j)->isProfessionnal();
-			out << "END OF NUMBER\n";
-		}
-		out << "END OF NUMBERS\n";
-		out << "A: " << (*i)->getAddress() << "\n";
-		out << "E: " << (*i)->getEmail() << "\n";
-		if ((*i)->getType() == Contact::COMPANY)
-		{
-			out << "COMPANY\n";
-			Company *c = static_cast< Company * >(*i);
-			out << "S: " << c->getSiret() << "\n";
-			out << "W: " << c->getWebsite() << "\n";
-		}
-		else
-		{
-			out << "INDIVIDUAL\n";
-			Individual *in = static_cast< Individual * >(*i);
-			out << "L: " << in->getLastName() << "\n";
-			out << "F: " << in->getFirstName() << "\n";
-			const QDate &date = in->getBirthday();
-			out << "D: " << date.day();
-			out << "M: " << date.month();
-			out << "Y: " << date.year();
-		}
-		out << "END OF CONTACT\n";
+		writeContact(out, *i);
 	}
 	out << "END OF CONTACTS\n";
-	out << "LISTS\n";
-	out << "#: " << lists.size() << "\n";
-	out << "END OF LISTS\n";
-	file.close();
 }
 
 void

@@ -22,6 +22,8 @@
 
 #include "list.hpp"
 
+#include <QTextStream>
+
 //! The directory class
 /*!
  * This class will be used to store all the contacts
@@ -76,6 +78,9 @@ namespace CutiesBook
 		static Directory *instance;
 		QSet< Contact * > contacts;
 		QSet< List * > lists;
+
+		void writeContact(QTextStream &out, const Contact *contact) const;
+		void writeContacts(QTextStream &out, const QSet< Contact * > &contacts) const;
 
 		Directory();
 		virtual ~Directory();
