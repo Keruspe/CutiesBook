@@ -88,6 +88,7 @@ Directory::save(const QString &path)
 	out << "LISTS\n";
 	out << "#: " << lists.size() << "\n";
 	out << "END OF LISTS\n";
+	file.close();
 }
 
 void
