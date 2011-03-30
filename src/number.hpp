@@ -65,7 +65,7 @@ namespace CutiesBook
 		virtual ~Number();
 	private:
 		QString number; // Can contain signs like "+"
-		phoneType type;
+		PhoneType type;
 		bool professionnal; // false for personnal
 	};
 }
