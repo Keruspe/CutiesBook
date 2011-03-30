@@ -46,11 +46,11 @@ namespace CutiesBook
 				delete Directory::instance;
 		}
 
-		//! Load contacts from disk
-		void loadContacts(QString &path);
+		//! Load contacts ans lists from disk
+		void load(QString &path);
 
-		//! Save contacts to disk
-		void saveContacts(QString &path);
+		//! Save contacts and lists to disk
+		void save(QString &path);
 
 		//! Get the contacts list
 		QSet< Contact * > &getContacts() { return contacts; }

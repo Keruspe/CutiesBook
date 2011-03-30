@@ -19,19 +19,21 @@
 
 #include "directory.hpp"
 
+#include <QFile>
+
 using namespace CutiesBook;
 
 Directory *Directory::instance = 0;
 
 void
-Directory::loadContacts(QString &path)
+Directory::load(QString &path)
 {
 	(void) path;
 	/* TODO: */
 }
 
 void
-Directory::saveContacts(QString &path)
+Directory::save(QString &path)
 {
 	(void) path;
 	/* TODO: */
