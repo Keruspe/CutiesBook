@@ -21,7 +21,7 @@
 
 using namespace CutiesBook;
 
-Number::Number(QString &_number, Number::phoneType _type, bool _professionnal) :
+Number::Number(QString &_number, Number::PhoneType _type, bool _professionnal) :
 	QObject(),
 	number(_number),
 	type(_type),

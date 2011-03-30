@@ -50,11 +50,12 @@ namespace CutiesBook
 
 		Individual(QString &lastName, QString &firstName, QDate &birthday, QSet< Number * > &numbers, QString address = "", QString email = "");
 		virtual ~Individual();
+
+		ContactType getType() const { return INDIVIDUAL; }
 	private:
 		QString lastName;
 		QString firstName;
 		QDate birthday;
-		void makeMeAbstractPlease() {}
 	};
 }
 

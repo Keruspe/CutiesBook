@@ -34,7 +34,8 @@ namespace CutiesBook
 	{
 	public:
 		//! Enum to store the phone type
-		enum phoneType {
+		enum PhoneType
+		{
 			FIXE,
 			MOBILE,
 			FAX
@@ -53,14 +54,14 @@ namespace CutiesBook
 		//! Get the number
 		const QString &getNumber() const { return number; }
 		//! Get the type of this phone number
-		phoneType getType() const { return type; }
+		PhoneType getType() const { return type; }
 
 		//! Set the number
 		void setNumber(QString &number) { this->number = number; }
 		//! Set the type of this phone number
-		void setType(phoneType type) { this->type = type; }
+		void setType(PhoneType type) { this->type = type; }
 
-		Number(QString &number, Number::phoneType type, bool professional = false);
+		Number(QString &number, PhoneType type, bool professional = false);
 		virtual ~Number();
 	private:
 		QString number; // Can contain signs like "+"

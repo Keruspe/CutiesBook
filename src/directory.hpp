@@ -28,6 +28,8 @@
  */
 namespace CutiesBook
 {
+	class IOException {};
+
 	class Directory : public QObject
 	{
 	public:

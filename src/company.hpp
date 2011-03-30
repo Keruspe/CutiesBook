@@ -44,10 +44,11 @@ namespace CutiesBook
 
 		Company(long siret, QString &website, QSet< Number * > &numbers, QString address = "", QString email = "");
 		virtual ~Company();
+
+		ContactType getType() const { return COMPANY; }
 	private:
 		long siret;
 		QString website;
-		void makeMeAbstractPlease() {}
 	};
 }
 

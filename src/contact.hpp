@@ -34,6 +34,13 @@ namespace CutiesBook
 	class Contact : public QObject
 	{
 	public:
+		//! Enum to store the type of Contact
+		enum ContactType
+		{
+			COMPANY,
+			INDIVIDUAL
+		};
+
 		//! Add a number to the contact
 		void addNumber(Number *number);
 		//! Delete a number from the contact
@@ -51,11 +58,13 @@ namespace CutiesBook
 
 		Contact(QSet< Number * > &numbers, QString &address, QString &email);
 		virtual ~Contact();
+
+		//! Get the type of Contact
+		virtual ContactType getType() = 0;
 	private:
 		QSet< Number * > numbers;
 		QString address;
 		QString email;
-		virtual void makeMeAbstractPlease() = 0;
 	};
 }
 
