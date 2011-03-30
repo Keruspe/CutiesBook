@@ -47,13 +47,13 @@ namespace CutiesBook
 		}
 
 		//! Load contacts ans lists from disk
-		void load(QString &path);
+		void load(const QString &path);
 
 		//! Save contacts and lists to disk
-		void save(QString &path);
+		void save(const QString &path);
 
 		//! Get the contacts list
-		QSet< Contact * > &getContacts() { return contacts; }
+		const QSet< Contact * > &getContacts() const { return contacts; }
 
 		//! Add a contact
 		void addContact(Contact *contact);
@@ -62,7 +62,7 @@ namespace CutiesBook
 		void deleteContact(Contact *contact);
 
 		//! Get the lists
-		QSet< List * > &getLists() { return lists; }
+		const QSet< List * > &getLists() const { return lists; }
 
 		//! Add a list
 		void addList(List *list);

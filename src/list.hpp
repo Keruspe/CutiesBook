@@ -32,7 +32,7 @@ namespace CutiesBook
 	{
 	public:
 		//! Get the contacts list
-		QSet< Contact * > &getContacts() { return contacts; }
+		const QSet< Contact * > &getContacts() const { return contacts; }
 
 		//! Add a contact
 		void addContact(Contact *contact);
@@ -44,7 +44,7 @@ namespace CutiesBook
 		void setName(QString &name) { this->name = name; }
 
 		//! Get the list name
-		QString &getName() { return name; }
+		const QString &getName() const { return name; }
 
 		List(QString &name);
 		virtual ~List();

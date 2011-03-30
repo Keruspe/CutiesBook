@@ -35,11 +35,11 @@ namespace CutiesBook
 	{
 	public:
 		//! Get the Individual lastName
-		QString &getLastName() { return lastName; }
+		const QString &getLastName() const { return lastName; }
 		//! Get the Individual firstName
-		QString &getFirstName() { return firstName; }
+		const QString &getFirstName() const { return firstName; }
 		//! Get the Individual birthday
-		QDate &getBirthday() { return birthday; }
+		const QDate &getBirthday() const { return birthday; }
 
 		//! Set the Individual lastName
 		void setLastName(QString &lastName) { this->lastName = lastName; }

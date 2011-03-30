@@ -33,9 +33,9 @@ namespace CutiesBook
 	{
 	public:
 		//! Get the Company SIRET
-		long getSiret() { return siret; }
+		long getSiret() const { return siret; }
 		//! Get the Company website
-		QString &getWebsite() { return website; }
+		const QString &getWebsite() const { return website; }
 
 		//! Set the Company SIRET
 		void setSiret(long siret) { this->siret = siret; }

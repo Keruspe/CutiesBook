@@ -46,14 +46,14 @@ namespace CutiesBook
 		void setPersonnal() { professionnal = false; }
 
 		//! Is this number professionnal ?
-		bool isProfessionnal() { return professionnal; }
+		bool isProfessionnal() const { return professionnal; }
 		//! Is this number personnal ?
-		bool isPersonnal() { return !professionnal; }
+		bool isPersonnal() const { return !professionnal; }
 
 		//! Get the number
-		QString &getNumber() { return number; }
+		const QString &getNumber() const { return number; }
 		//! Get the type of this phone number
-		phoneType getType() { return type; }
+		phoneType getType() const { return type; }
 
 		//! Set the number
 		void setNumber(QString &number) { this->number = number; }

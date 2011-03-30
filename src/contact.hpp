@@ -40,9 +40,9 @@ namespace CutiesBook
 		void deleteNumber(Number *number);
 
 		//! Get the contact address
-		QString &getAddress() { return address; }
+		const QString &getAddress() const { return address; }
 		//! Get the contact email
-		QString &getEmail() { return email; }
+		const QString &getEmail() const { return email; }
 
 		//! Set the contact address
 		void setAddress(QString &address) { this->address = address; }

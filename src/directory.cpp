@@ -26,17 +26,15 @@ using namespace CutiesBook;
 Directory *Directory::instance = 0;
 
 void
-Directory::load(QString &path)
+Directory::load(const QString &path)
 {
-	(void) path;
-	/* TODO: */
+	QFile file(path);
 }
 
 void
-Directory::save(QString &path)
+Directory::save(const QString &path)
 {
-	(void) path;
-	/* TODO: */
+	QFile file(path);
 }
 
 void
