@@ -21,7 +21,7 @@
 
 using namespace CutiesBook;
 
-Company::Company(long _siret, std::string &_website, std::set< Number * > &numbers, std::string address, std::string email) :
+Company::Company(long _siret, QString &_website, QSet< Number * > &numbers, QString address, QString email) :
 	Contact(numbers, address, email),
 	siret(_siret),
 	website(_website)

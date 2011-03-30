@@ -22,8 +22,6 @@
 
 #include "list.hpp"
 
-#include <set>
-
 //! The directory class
 /*!
  * This class will be used to store all the contacts
@@ -49,13 +47,13 @@ namespace CutiesBook
 		}
 
 		//! Load contacts from disk
-		void loadContacts(std::string path);
+		void loadContacts(QString &path);
 
 		//! Save contacts to disk
-		void saveContacts(std::string path);
+		void saveContacts(QString &path);
 
 		//! Get the contacts list
-		std::set< Contact * > &getContacts() { return contacts; }
+		QSet< Contact * > &getContacts() { return contacts; }
 
 		//! Add a contact
 		void addContact(Contact *contact);
@@ -64,7 +62,7 @@ namespace CutiesBook
 		void deleteContact(Contact *contact);
 
 		//! Get the lists
-		std::set< List * > &getLists() { return lists; }
+		QSet< List * > &getLists() { return lists; }
 
 		//! Add a list
 		void addList(List *list);
@@ -74,8 +72,8 @@ namespace CutiesBook
 
 	private:
 		static Directory *instance;
-		std::set< Contact * > contacts;
-		std::set< List * > lists;
+		QSet< Contact * > contacts;
+		QSet< List * > lists;
 
 		Directory();
 		virtual ~Directory();

@@ -35,18 +35,18 @@ namespace CutiesBook
 		//! Get the Company SIRET
 		long getSiret() { return siret; }
 		//! Get the Company website
-		std::string &getWebsite() { return website; }
+		QString &getWebsite() { return website; }
 
 		//! Set the Company SIRET
 		void setSiret(long siret) { this->siret = siret; }
 		//! Set the Company website
-		void setWebsite(std::string &website) { this->website = website; }
+		void setWebsite(QString &website) { this->website = website; }
 
-		Company(long siret, std::string &website, std::set< Number * > &numbers, std::string address = "", std::string email = "");
+		Company(long siret, QString &website, QSet< Number * > &numbers, QString address = "", QString email = "");
 		virtual ~Company();
 	private:
 		long siret;
-		std::string website;
+		QString website;
 		void makeMeAbstractPlease() {}
 	};
 }

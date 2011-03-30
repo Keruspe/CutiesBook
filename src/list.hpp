@@ -22,8 +22,6 @@
 
 #include "contact.hpp"
 
-#include <set>
-
 //! The list class
 /*!
  * This class will be used to store a list of contacts
@@ -34,7 +32,7 @@ namespace CutiesBook
 	{
 	public:
 		//! Get the contacts list
-		std::set< Contact * > &getContacts() { return contacts; }
+		QSet< Contact * > &getContacts() { return contacts; }
 
 		//! Add a contact
 		void addContact(Contact *contact);
@@ -43,17 +41,17 @@ namespace CutiesBook
 		void deleteContact(Contact *contact);
 
 		//! Set the list name
-		void setName(std::string &name) { this->name = name; }
+		void setName(QString &name) { this->name = name; }
 
 		//! Get the list name
-		std::string &getName() { return name; }
+		QString &getName() { return name; }
 
-		List(std::string &name);
+		List(QString &name);
 		virtual ~List();
 
 	private:
-		std::string name;
-		std::set< Contact * > contacts;
+		QString name;
+		QSet< Contact * > contacts;
 	};
 }
 

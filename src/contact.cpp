@@ -30,11 +30,11 @@ Contact::addNumber(Number *number)
 void
 Contact::deleteNumber(Number *number)
 {
-	numbers.erase(number);
+	numbers.remove(number);
 	delete number;
 }
 
-Contact::Contact(std::set< Number * > &_numbers, std::string &_address, std::string &_email) :
+Contact::Contact(QSet< Number * > &_numbers, QString &_address, QString &_email) :
 	QObject(),
 	numbers(_numbers),
 	address(_address),
@@ -44,7 +44,7 @@ Contact::Contact(std::set< Number * > &_numbers, std::string &_address, std::str
 
 Contact::~Contact()
 {
-	for (std::set< Number * >::iterator i = numbers.begin() ; i != numbers.end() ; ++i)
+	for (QSet< Number * >::iterator i = numbers.begin() ; i != numbers.end() ; ++i)
 	{
 		delete *i;
 	}

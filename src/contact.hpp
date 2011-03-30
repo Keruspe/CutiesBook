@@ -22,7 +22,7 @@
 
 #include "number.hpp"
 
-#include <set>
+#include <QSet>
 
 //! The contact class
 /*!
@@ -40,21 +40,21 @@ namespace CutiesBook
 		void deleteNumber(Number *number);
 
 		//! Get the contact address
-		std::string &getAddress() { return address; }
+		QString &getAddress() { return address; }
 		//! Get the contact email
-		std::string &getEmail() { return email; }
+		QString &getEmail() { return email; }
 
 		//! Set the contact address
-		void setAddress(std::string &address) { this->address = address; }
+		void setAddress(QString &address) { this->address = address; }
 		//! Set the contact email
-		void setEmail(std::string &email) { this->email = email; }
+		void setEmail(QString &email) { this->email = email; }
 
-		Contact(std::set< Number * > &numbers, std::string &address, std::string &email);
+		Contact(QSet< Number * > &numbers, QString &address, QString &email);
 		virtual ~Contact();
 	private:
-		std::set< Number * > numbers;
-		std::string address;
-		std::string email;
+		QSet< Number * > numbers;
+		QString address;
+		QString email;
 		virtual void makeMeAbstractPlease() = 0;
 	};
 }

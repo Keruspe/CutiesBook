@@ -30,10 +30,10 @@ List::addContact(Contact *contact)
 void
 List::deleteContact(Contact *contact)
 {
-	contacts.erase(contact);
+	contacts.remove(contact);
 }
 
-List::List(std::string &_name) :
+List::List(QString &_name) :
 	QObject(),
 	name(_name)
 {

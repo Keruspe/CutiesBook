@@ -24,14 +24,14 @@ using namespace CutiesBook;
 Directory *Directory::instance = 0;
 
 void
-Directory::loadContacts(std::string path)
+Directory::loadContacts(QString &path)
 {
 	(void) path;
 	/* TODO: */
 }
 
 void
-Directory::saveContacts(std::string path)
+Directory::saveContacts(QString &path)
 {
 	(void) path;
 	/* TODO: */
@@ -46,8 +46,8 @@ Directory::addContact(Contact *contact)
 void
 Directory::deleteContact(Contact *contact)
 {
-	contacts.erase(contact);
-	for (std::set< List * >::iterator i = lists.begin() ; i != lists.end() ; ++i)
+	contacts.remove(contact);
+	for (QSet< List * >::iterator i = lists.begin() ; i != lists.end() ; ++i)
 	{
 		(*i)->deleteContact(contact);
 	}
@@ -63,7 +63,7 @@ Directory::addList(List *list)
 void
 Directory::deleteList(List *list)
 {
-	lists.erase(list);
+	lists.remove(list);
 	delete list;
 }
 
@@ -74,11 +74,11 @@ Directory::Directory() :
 
 Directory::~Directory()
 {
-	for (std::set< Contact * >::iterator i = contacts.begin() ; i != contacts.end() ; ++i)
+	for (QSet< Contact * >::iterator i = contacts.begin() ; i != contacts.end() ; ++i)
 	{
 		delete *i;
 	}
-	for (std::set< List * >::iterator i = lists.begin() ; i != lists.end() ; ++i)
+	for (QSet< List * >::iterator i = lists.begin() ; i != lists.end() ; ++i)
 	{
 		delete *i;
 	}

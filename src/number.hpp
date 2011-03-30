@@ -21,6 +21,7 @@
 #define __CUTIESBOOK_NUMBER_HPP__
 
 #include <QObject>
+#include <QString>
 
 //! The number class
 /*!
@@ -50,19 +51,19 @@ namespace CutiesBook
 		bool isPersonnal() { return !professionnal; }
 
 		//! Get the number
-		std::string &getNumber() { return number; }
+		QString &getNumber() { return number; }
 		//! Get the type of this phone number
 		phoneType getType() { return type; }
 
 		//! Set the number
-		void setNumber(std::string &number) { this->number = number; }
+		void setNumber(QString &number) { this->number = number; }
 		//! Set the type of this phone number
 		void setType(phoneType type) { this->type = type; }
 
-		Number(std::string &number, Number::phoneType type, bool professional = false);
+		Number(QString &number, Number::phoneType type, bool professional = false);
 		virtual ~Number();
 	private:
-		std::string number; // Can contain signs like "+"
+		QString number; // Can contain signs like "+"
 		phoneType type;
 		bool professionnal; // false for personnal
 	};
