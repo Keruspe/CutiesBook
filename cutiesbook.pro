@@ -3,6 +3,11 @@ TARGET = cutiesbook
 DEPENDPATH += .
 INCLUDEPATH += . src
 
+QMAKE_CXXFLAGS += \
+	-Wall \
+	-Wextra \
+	-Werror
+
 SOURCES += \
 	src/application.cpp \
 	src/company.cpp \
