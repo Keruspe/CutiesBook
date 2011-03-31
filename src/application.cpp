@@ -50,7 +50,7 @@ Application::Application(int &argc, char *argv[]) :
 		QDate date(1970, 1, 1);
 		QString add("Nowhere");
 		QString email("plop@example.com");
-		directory->addContact(new Individual(last, first, date, QString("Nowhere"), QString("plop@example.com")));
+		directory->addContact(new Individual(last, first, date, add, email));
 	}
 	directory->save(file);
 
