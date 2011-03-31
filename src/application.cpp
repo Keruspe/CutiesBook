@@ -42,7 +42,8 @@ Application::Application(int &argc, char *argv[]) :
 	 */
 	Directory *directory = Directory::getInstance();
 	directory->load(file);
-	/*for ( int i = 0 ; i < 60 ; ++i )
+	/*
+	for ( int i = 0 ; i < 60 ; ++i )
 	{
 		QString last("Contact");
 		QString first("Number");
@@ -50,8 +51,17 @@ Application::Application(int &argc, char *argv[]) :
 		QDate date(1970, 1, 1);
 		QString add("Nowhere");
 		QString email("plop@example.com");
-		directory->addContact(new Individual(last, first, date, add, email));
-	}*/
+		Individual *i = new Individual(last, first, date, add, email);
+		Number *n = new Number("555-9574", Number::MOBILE, true);
+		Number *n2 = new Number("++555-9574", Number::FIXE, false);
+		i->addNumber(n);
+		i->addNumber(n2);
+		directory->addContact(i);
+	}
+	QString website("foobar.org");
+	int siret = 42;
+	directory->addContact(new Company(siret, website));
+	*/
 	directory->save(file);
 
 	/*

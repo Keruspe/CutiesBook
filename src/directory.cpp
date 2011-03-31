@@ -77,9 +77,9 @@ void
 Directory::writeNumber(QTextStream &out, const Number *number) const
 {
 	out << "NUMBER\n";
-	out << "N: " << number->getNumber();
-	out << "T: " << number->getType();
-	out << "P: " << number->isProfessionnal();
+	out << "N: " << number->getNumber() << "\n";
+	out << "T: " << number->getType() << "\n";
+	out << "P: " << number->isProfessionnal() << "\n";
 	out << "END OF NUMBER\n";
 }
 
