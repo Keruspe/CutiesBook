@@ -61,7 +61,7 @@ namespace CutiesBook
 		virtual ~Contact();
 
 		//! Get the type of Contact
-		virtual ContactType getType() = 0;
+		virtual ContactType getType() const = 0;
 	private:
 		QSet< Number * > numbers;
 		QString address;
