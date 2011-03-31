@@ -54,16 +54,7 @@ Directory::save(const QString &path)
 		throw IOException();
 	QTextStream out(&file);
 	writeContacts(out, contacts);
-	out << "LISTS\n";
-	out << "#: " << lists.size() << "\n";
-	for (QSet< List * >::const_iterator i = lists.begin() ; i != lists.end() ; ++i)
-	{
-		out << "LIST\n";
-		out << "N: " << (*i)->getName() << "\n";
-		writeContacts(out, (*i)->getContacts());
-		out << "END OF LIST\n";
-	}
-	out << "END OF LISTS\n";
+	writeLists(out, lists);
 	file.close();
 }
 
@@ -125,12 +116,31 @@ void
 Directory::writeContacts(QTextStream &out, const QSet< Contact * > &contacts) const
 {
 	out << "CONTACTS\n";
-	out << "#: " << contacts.size() << "\n";
 	for (QSet< Contact * >::const_iterator i = contacts.begin() ; i != contacts.end() ; ++i)
 	{
 		writeContact(out, *i);
 	}
 	out << "END OF CONTACTS\n";
+}
+
+void
+Directory::writeList(QTextStream &out, const List *list) const
+{
+	out << "LIST\n";
+	out << "N: " << list->getName() << "\n";
+	writeContacts(out, list->getContacts());
+	out << "END OF LIST\n";
+}
+
+void
+Directory::writeLists(QTextStream &out, const QSet< List * > &lists) const
+{
+	out << "LISTS\n";
+	for (QSet< List * >::const_iterator i = lists.begin() ; i != lists.end() ; ++i)
+	{
+		writeList(out, *i);
+	}
+	out << "END OF LISTS\n";
 }
 
 Number *
