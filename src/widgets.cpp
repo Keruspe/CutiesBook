@@ -17,44 +17,34 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __CUTIESBOOK_MAINWINDOW_HPP__
-#define __CUTIESBOOK_MAINWINDOW_HPP__
-
 #include "widgets.hpp"
 
-#include <QMainWindow>
-#include <QAction>
+#include "mainwindow.hpp"
+#include "directory.hpp"
 
-//! The main window class
-namespace CutiesBook
+#include <QString>
+#include <QDebug>
+
+using namespace CutiesBook;
+
+ListWidget::ListWidget(QWidget *window) :
+	QTableView(window),
+	header(0),
+	contacts()
 {
-	class MainWindow : public QMainWindow
-	{
-	public:
-		//! Instance getter
-		static MainWindow *getInstance()
-		{
-			if ( ! MainWindow::instance )
-				MainWindow::instance = new MainWindow();
-			return MainWindow::instance;
-		}
+	setSortingEnabled(true);
 
-		//! Clean the instance
-		static void cleanInstance()
-		{
-			if ( MainWindow::instance )
-				delete MainWindow::instance;
-		}
+	header = new QHeaderView(Qt::Vertical, this);
+	setVerticalHeader(header);
 
-	private:
-		static MainWindow *instance;
-
-		QAction *quit;
-		ListWidget *centralWidget;
-
-		MainWindow();
-		~MainWindow();
-	};
+	setModel(Directory::getInstance());
 }
 
-#endif /* __CUTIESBOOK_MAINWINDOW_HPP__ */
+ListWidget::~ListWidget()
+{
+	while ( ! contacts.isEmpty() )
+	{
+		delete contacts.first();
+		contacts.pop_front();
+	}
+}

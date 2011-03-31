@@ -17,44 +17,30 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __CUTIESBOOK_MAINWINDOW_HPP__
-#define __CUTIESBOOK_MAINWINDOW_HPP__
+#ifndef __CUTIESBOOK_WIDGETS_HPP__
+#define __CUTIESBOOK_WIDGETS_HPP__
 
-#include "widgets.hpp"
+#include <QTableView>
+#include <QHeaderView>
+#include <QWidget>
+#include <QVector>
+#include <QBoxLayout>
+#include <QLabel>
 
-#include <QMainWindow>
-#include <QAction>
-
-//! The main window class
+//! The list widget
 namespace CutiesBook
 {
-	class MainWindow : public QMainWindow
+	class ListWidget : public QTableView
 	{
 	public:
-		//! Instance getter
-		static MainWindow *getInstance()
-		{
-			if ( ! MainWindow::instance )
-				MainWindow::instance = new MainWindow();
-			return MainWindow::instance;
-		}
-
-		//! Clean the instance
-		static void cleanInstance()
-		{
-			if ( MainWindow::instance )
-				delete MainWindow::instance;
-		}
+		//! Constructor
+		ListWidget(QWidget *window);
+		~ListWidget();
 
 	private:
-		static MainWindow *instance;
-
-		QAction *quit;
-		ListWidget *centralWidget;
-
-		MainWindow();
-		~MainWindow();
+		QHeaderView *header;
+		QVector<QWidget *> contacts;
 	};
 }
 
-#endif /* __CUTIESBOOK_MAINWINDOW_HPP__ */
+#endif /* __CUTIESBOOK_WIDGETS_HPP__ */

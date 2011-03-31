@@ -20,6 +20,7 @@
 #include "directory.hpp"
 
 #include <QFile>
+#include <QSize>
 
 #include <cstdlib>
 
@@ -454,8 +455,114 @@ Directory::deleteList(List *list)
 	delete list;
 }
 
+int
+Directory::rowCount(const QModelIndex &) const
+{
+	return contacts.size();
+}
+
+int
+Directory::columnCount(const QModelIndex &) const
+{
+	return COLUMNS_COUNT;
+}
+
+QVariant
+Directory::data(const QModelIndex &index, int role) const
+{
+	if ( ( ! index.isValid() ) || ( role != Qt::DisplayRole ) )
+		return QVariant();
+	Contact *contact = contacts.toList().at(index.row());
+	Individual *individual = 0;
+	Company *company = 0;
+	switch ( contact->getType() )
+	{
+		case Contact::INDIVIDUAL:
+			individual = (Individual *)contact;
+		break;
+		case Contact::COMPANY:
+			company = (Company *)contact;
+		break;
+	}
+	switch ( index.column() )
+	{
+		/* Individual */
+		case FIRSTNAME:
+			if ( !individual )
+				break;
+			return individual->getFirstName();
+		case LASTNAME:
+			if ( !individual )
+				break;
+			return individual->getLastName();
+		case DATE:
+			if ( !individual )
+				break;
+			return individual->getBirthday();
+		/* Company */
+		case SIRET:
+			if ( !company )
+				break;
+			//return company->getSiret();
+		return QVariant();
+		case WEBSITE:
+			if ( !company )
+				break;
+			return company->getWebsite();
+		/* Common */
+		case NUMBERS:
+			//return contact->getNumbers();
+		return QVariant();
+		case ADDRESS:
+			return contact->getAddress();
+		case EMAIL:
+			return contact->getEmail();
+	}
+	return QVariant();
+}
+
+QVariant
+Directory::headerData(int section, Qt::Orientation orientation, int role) const
+{
+	switch ( role )
+	{
+		case Qt::DisplayRole:
+			if ( orientation == Qt::Horizontal )
+			{
+				switch ( section )
+				{
+					/* Individual */
+					case FIRSTNAME:
+						return QString("First Name");
+					case LASTNAME:
+						return QString("Last Name");
+					case DATE:
+						return QString("Birthday");
+					/* Company */
+					case SIRET:
+						return QString("SIRET");
+					return QVariant();
+					case WEBSITE:
+						return QString("Web Site");
+					/* Common */
+					case NUMBERS:
+						return QString("Numbers");
+					case ADDRESS:
+						return QString("Address");
+					case EMAIL:
+						return QString("E-Mail");
+				}
+			}
+		case Qt::SizeHintRole:
+			if ( orientation == Qt::Vertical )
+				return QSize(0, 0); // There is probably a better way to do …
+		default:
+		return QVariant();
+	}
+}
+
 Directory::Directory() :
-	QObject()
+	QAbstractTableModel()
 {
 }
 

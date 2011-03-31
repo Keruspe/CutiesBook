@@ -24,6 +24,7 @@
 #include "individual.hpp"
 #include "list.hpp"
 
+#include <QAbstractTableModel>
 #include <QTextStream>
 
 //! The directory class
@@ -35,7 +36,7 @@ namespace CutiesBook
 	class IOException {};
 	class MalformedFileException {};
 
-	class Directory : public QObject
+	class Directory : public QAbstractTableModel
 	{
 	public:
 		//! Instance getter
@@ -77,7 +78,25 @@ namespace CutiesBook
 		//! Delete a list
 		void deleteList(List *list);
 
+
+		int rowCount(const QModelIndex &parent = QModelIndex()) const;
+		int columnCount(const QModelIndex &parent = QModelIndex()) const;
+		QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
+		QVariant headerData(int section, Qt::Orientation orientation, int role) const;
+
 	private:
+		enum {
+			FIRSTNAME = 0,
+			LASTNAME,
+			DATE,
+			SIRET,
+			WEBSITE,
+			NUMBERS,
+			ADDRESS,
+			EMAIL,
+			COLUMNS_COUNT
+		} Columns;
+
 		static Directory *instance;
 		QSet< Contact * > contacts;
 		QSet< List * > lists;
