@@ -49,6 +49,8 @@ Directory::save(const QString &path)
 	for (QSet< List * >::const_iterator i = lists.begin() ; i != lists.end() ; ++i)
 	{
 		out << "LIST\n";
+		out << "N: " << (*i)->getName() << "\n";
+		writeContacts(out, (*i)->getContacts());
 		out << "END OF LIST\n";
 	}
 	out << "END OF LISTS\n";
