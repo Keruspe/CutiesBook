@@ -38,6 +38,8 @@ namespace CutiesBook
 
 	class Directory : public QAbstractTableModel
 	{
+		Q_OBJECT
+
 	public:
 		//! Instance getter
 		static Directory *getInstance()
@@ -85,6 +87,9 @@ namespace CutiesBook
 		QVariant headerData(int section, Qt::Orientation orientation, int role) const;
 		void sort(int column, Qt::SortOrder order);
 
+	signals:
+		void sorted();
+
 	private:
 		enum {
 			FIRSTNAME = 0,
@@ -121,6 +126,11 @@ namespace CutiesBook
 		QList< Contact * > *readContacts(QTextStream &in) const;
 		List *readList(QTextStream &in) const;
 		QList< List * > *readLists(QTextStream &in) const;
+
+		static int sortColumn;
+		static Qt::SortOrder sortOrder;
+
+		static bool contactOrder(Contact *, Contact *);
 
 		Directory();
 		virtual ~Directory();

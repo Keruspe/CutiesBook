@@ -31,6 +31,8 @@ ListWidget::ListWidget(QWidget *window) :
 	Directory *directory = Directory::getInstance();
 
 	setModel(directory);
+
+	connect(directory, SIGNAL(sorted()), this, SLOT(reset()));
 }
 
 ListWidget::~ListWidget()

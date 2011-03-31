@@ -21,6 +21,7 @@
 
 #include <QFile>
 #include <QSize>
+#include <QtAlgorithms>
 
 #include <cstdlib>
 
@@ -378,7 +379,7 @@ Directory::readContacts(QTextStream &in) const
 	while (!(line = in.readLine()).isNull())
 	{
 		if (line.compare("CONTACT") == 0)
-			contacts->insert(readContact(in));
+			contacts->append(readContact(in));
 		else if (line.compare("END OF CONTACTS") == 0)
 			break;
 		else
@@ -392,7 +393,7 @@ Directory::readList(QTextStream &in) const
 {
 	QString line;
 	QString name;
-	QSet< Contact * > *tmp = 0;
+	QList< Contact * > *tmp = 0;
 
 	while (!(line = in.readLine()).isNull())
 	{
@@ -413,7 +414,7 @@ Directory::readList(QTextStream &in) const
 	List *list = new List(name);
 	if (tmp)
 	{
-		for (QSet< Contact * >::iterator i = tmp->begin() ; i != tmp->end() ; ++i)
+		for (QList< Contact * >::iterator i = tmp->begin() ; i != tmp->end() ; ++i)
 		{
 			list->addContact(*i);
 		}
@@ -430,7 +431,7 @@ Directory::readLists(QTextStream &in) const
 	while (!(line = in.readLine()).isNull())
 	{
 		if (line.compare("LIST") == 0)
-			lists->insert(readList(in));
+			lists->append(readList(in));
 		else if (line.compare("END OF LISTS") == 0)
 			break;
 		else
@@ -575,14 +576,94 @@ Directory::headerData(int section, Qt::Orientation orientation, int role) const
 		return QVariant();
 	}
 }
+
 void
 Directory::sort(int column, Qt::SortOrder order)
 {
-	Q_UNUSED(column);
-	Q_UNUSED(order);
-	/*
-	 * TODO: implement a sort algorithm
-	 */
+	sortColumn = column;
+	sortOrder = order;
+	qStableSort(contacts.begin(), contacts.end(), &contactOrder);
+	emit sorted();
+}
+
+int Directory::sortColumn = Directory::FIRSTNAME;
+Qt::SortOrder Directory::sortOrder = Qt::AscendingOrder;
+
+bool
+Directory::contactOrder(Contact *c1, Contact *c2)
+{
+	Individual *in1 = 0, *in2 = 0;
+	Company *cp1 = 0, *cp2 = 0;
+	switch ( c1->getType() )
+	{
+		case Contact::INDIVIDUAL:
+			in1 = (Individual *)c1;
+		break;
+		case Contact::COMPANY:
+			cp1 = (Company *)c1;
+		break;
+		case Contact::NONE:
+		break;
+	}
+	switch ( c2->getType() )
+	{
+		case Contact::INDIVIDUAL:
+			in2 = (Individual *)c2;
+		break;
+		case Contact::COMPANY:
+			cp2 = (Company *)c2;
+		break;
+		case Contact::NONE:
+		break;
+	}
+	bool ret = false;
+	switch ( sortColumn )
+	{
+		/* Individual */
+		case FIRSTNAME:
+			if ( !in1 && in2 )
+				ret = true;
+			else if ( in1 && in2 )
+				ret = ( in1->getFirstName() < in2->getFirstName() );
+		break;
+		case LASTNAME:
+			if ( !in1 && in2 )
+				ret = true;
+			else if ( in1 && in2 )
+				ret = ( in1->getLastName() < in2->getLastName() );
+		break;
+		case DATE:
+			if ( !in1 && in2 )
+				ret = true;
+			else if ( in1 && in2 )
+				ret = ( in1->getBirthday() < in2->getBirthday() );
+		break;
+		/* Company */
+		case SIRET:
+			if ( !cp1 && cp2 )
+				ret = true;
+			else if ( cp1 && cp2 )
+				ret = ( cp1->getSiret() < cp2->getSiret() );
+		case WEBSITE:
+			if ( !cp1 && cp2 )
+				ret = true;
+			else if ( cp1 && cp2 )
+				ret = ( cp1->getWebsite() < cp2->getWebsite() );
+		break;
+		/* Common */
+		case ADDRESS:
+			ret = ( c1->getAddress() < c2->getAddress() );
+		break;
+		case EMAIL:
+			ret = ( c1->getEmail() < c2->getEmail() );
+		break;
+		case NUMBERS:
+		break;
+	}
+	if ( sortOrder == Qt::AscendingOrder )
+		return ret;
+	else
+		return !ret;
 }
 
 Directory::Directory() :
