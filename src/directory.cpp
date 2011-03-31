@@ -155,10 +155,10 @@ Directory::readNumber(QTextStream &in) const
 	return number;
 }
 
-QSet< Number * > &
-readNumbers(QTextStream &in) const
+QSet< Number * > *
+Directory::readNumbers(QTextStream &in) const
 {
-	QSet< Number * > numbers = new QSet< Number * >();
+	QSet< Number * > *numbers = new QSet< Number * >();
 	QString line;
 	while (!(line = in.readLine()).isNull())
 	{
@@ -168,7 +168,7 @@ readNumbers(QTextStream &in) const
 }
 
 QDate *
-readDate(QTextStream &in) const
+Directory::readDate(QTextStream &in) const
 {
 	QDate *date = new QDate();
 	QString line;
@@ -182,7 +182,7 @@ readDate(QTextStream &in) const
 Contact *
 Directory::readContact(QTextStream &in) const
 {
-	Contact *contact = new Contact();
+	Contact *contact = 0;
 	QString line;
 	while (!(line = in.readLine()).isNull())
 	{
@@ -194,7 +194,7 @@ Directory::readContact(QTextStream &in) const
 QSet< Contact * > *
 Directory::readContacts(QTextStream &in) const
 {
-	QSet< Contact * > *contacts = new QSet< Contacts * >();
+	QSet< Contact * > *contacts = new QSet< Contact * >();
 	QString line;
 	while (!(line = in.readLine()).isNull())
 	{

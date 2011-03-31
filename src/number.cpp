@@ -29,6 +29,11 @@ Number::Number(QString &_number, Number::PhoneType _type, bool _professionnal) :
 {
 }
 
+Number::Number() :
+	QObject()
+{
+}
+
 Number::~Number()
 {
 }

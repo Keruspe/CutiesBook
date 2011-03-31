@@ -62,6 +62,7 @@ namespace CutiesBook
 		void setType(PhoneType type) { this->type = type; }
 
 		Number(QString &number, PhoneType type, bool professional = false);
+		Number();
 		virtual ~Number();
 	private:
 		QString number; // Can contain signs like "+"
