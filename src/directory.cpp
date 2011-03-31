@@ -17,9 +17,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "company.hpp"
 #include "directory.hpp"
-#include "individual.hpp"
 
 #include <QFile>
 
@@ -104,6 +102,23 @@ Directory::writeDate(QTextStream &out, const QDate &date) const
 }
 
 void
+Directory::writeCompany(QTextStream &out, const Company *company) const
+{
+	out << "COMPANY\n";
+	out << "S: " << company->getSiret() << "\n";
+	out << "W: " << company->getWebsite() << "\n";
+}
+
+void
+Directory::writeIndividual(QTextStream &out, const Individual *individual) const
+{
+	out << "INDIVIDUAL\n";
+	out << "L: " << individual->getLastName() << "\n";
+	out << "F: " << individual->getFirstName() << "\n";
+	writeDate(out, individual->getBirthday());
+}
+
+void
 Directory::writeContact(QTextStream &out, const Contact *contact) const
 {
 	out << "CONTACT\n";
@@ -112,18 +127,11 @@ Directory::writeContact(QTextStream &out, const Contact *contact) const
 	out << "E: " << contact->getEmail() << "\n";
 	if (contact->getType() == Contact::COMPANY)
 	{
-		out << "COMPANY\n";
-		const Company *c = static_cast< const Company * >(contact);
-		out << "S: " << c->getSiret() << "\n";
-		out << "W: " << c->getWebsite() << "\n";
+		writeCompany(out, static_cast< const Company * >(contact));
 	}
 	else
 	{
-		out << "INDIVIDUAL\n";
-		const Individual *i = static_cast< const Individual * >(contact);
-		out << "L: " << i->getLastName() << "\n";
-		out << "F: " << i->getFirstName() << "\n";
-		writeDate(out, i->getBirthday());
+		writeIndividual(out, static_cast< const Individual * >(contact));
 	}
 	out << "END OF CONTACT\n";
 }
@@ -162,13 +170,32 @@ Directory::writeLists(QTextStream &out, const QSet< List * > &lists) const
 Number *
 Directory::readNumber(QTextStream &in) const
 {
-	Number *number = new Number();
 	QString line;
+	Number::PhoneType type;
+	const char *number;
+	bool professionnal;
 	while (!(line = in.readLine()).isNull())
 	{
-		throw MalformedFileException();
+		if (line.compare("END OF NUMBER") != 0)
+		{
+			const char *str = line.toAscii().constData();
+			switch (str[0])
+			{
+			case 'N':
+				number = str + 3;
+				break;
+			case 'T':
+				type = static_cast<Number::PhoneType>(atoi(str + 3));
+				break;
+			case 'P':
+				professionnal = atoi(str + 3);
+				break;
+			default:
+				throw MalformedFileException();
+			}
+		}
 	}
-	return number;
+	return new Number(number, type, professionnal);
 }
 
 QSet< Number * > *
@@ -178,7 +205,10 @@ Directory::readNumbers(QTextStream &in) const
 	QString line;
 	while (!(line = in.readLine()).isNull())
 	{
-		throw MalformedFileException();
+		if (line.compare("NUMBER") == 0)
+			numbers->insert(readNumber(in));
+		else if (line.compare("END OF NUMBERS") != 0)
+			throw MalformedFileException();
 	}
 	return numbers;
 }
@@ -192,33 +222,141 @@ Directory::readDate(QTextStream &in) const
 	int year;
 	while (!(line = in.readLine()).isNull())
 	{
-		const char *str = line.toAscii().constData();
-		switch (str[0])
+		if (line.compare("END OF DATE") != 0)
 		{
-		case 'D':
-			day = atoi(str + 3);
-			break;
-		case 'M':
-			month = atoi(str + 3);
-			break;
-		case 'Y':
-			year = atoi(str + 3);
-			break;
-		default:
-			throw MalformedFileException();
+			const char *str = line.toAscii().constData();
+			switch (str[0])
+			{
+			case 'D':
+				day = atoi(str + 3);
+				break;
+			case 'M':
+				month = atoi(str + 3);
+				break;
+			case 'Y':
+				year = atoi(str + 3);
+				break;
+			default:
+				throw MalformedFileException();
+			}
 		}
 	}
 	return QDate(year, month, day);
 }
 
+Company *
+Directory::readCompany(QTextStream &in, const char *address, const char *email) const
+{
+	QString line;
+	int siret;
+	const char *website;
+	while (!(line = in.readLine()).isNull())
+	{
+		if (line.compare("END OF CONTACT") != 0)
+		{
+			const char *str = line.toAscii().constData();
+			switch (str[0])
+			{
+			case 'W':
+				website = str + 3;
+				break;
+			case 'S':
+				siret = atoi(str + 3);
+				break;
+			default:
+				throw MalformedFileException();
+			}
+		}
+	}
+	Company *company = new Company(siret, website, address, email);
+	return company;
+}
+
+Individual *
+Directory::readIndividual(QTextStream &in, const char *address, const char *email) const
+{
+	QString line;
+	const char *lastName, *firstName;
+	QDate birthday;
+	while (!(line = in.readLine()).isNull())
+	{
+		if (line.compare("DATE") == 0)
+		{
+			birthday = readDate(in);
+		}
+		else if (line.compare("END OF CONTACT") != 0)
+		{
+			const char *str = line.toAscii().constData();
+			switch (str[0])
+			{
+			case 'L':
+				lastName = str + 3;
+				break;
+			case 'F':
+				firstName = str + 3;
+				break;
+			default:
+				throw MalformedFileException();
+			}
+		}
+	}
+	Individual *individual = new Individual(lastName, firstName, birthday, address, email);
+	return individual;
+}
+
 Contact *
 Directory::readContact(QTextStream &in) const
 {
-	Contact *contact = 0;
+	Contact::ContactType type = Contact::NONE;
 	QString line;
+	QSet< Number * > *numbers = 0;
+	const char *address, *email;
 	while (!(line = in.readLine()).isNull())
 	{
+		if (line.compare("INDIVIDUAL") == 0)
+		{
+			type = Contact::INDIVIDUAL;
+			break;
+		}
+		else if (line.compare("COMPANY") == 0)
+		{
+			type = Contact::COMPANY;
+			break;
+		}
+		else if (line.compare("NUMBERS") == 0)
+		{
+			numbers = readNumbers(in);
+		}
+		else if (line.compare("END OF CONTACT") != 0)
+		{
+			const char *str = line.toAscii().constData();
+			switch (str[0])
+			{
+			case 'A':
+				address = str + 3;
+				break;
+			case 'E':
+				email = str + 3;
+				break;
+			default:
+				throw MalformedFileException();
+			}
+		}
+	}
+	Contact *contact;
+	if (type == Contact::COMPANY)
+		contact = readCompany(in, address, email);
+	else if (type == Contact::INDIVIDUAL)
+		contact = readIndividual(in, address, email);
+	else
 		throw MalformedFileException();
+	if (numbers)
+	{
+		for (QSet< Number * >::iterator i = numbers->begin() ; i != numbers->end() ; ++i)
+		{
+			contact->addNumber(*i);
+		}
+		delete numbers;
 	}
 	return contact;
 }
@@ -241,26 +379,32 @@ Directory::readContacts(QTextStream &in) const
 List *
 Directory::readList(QTextStream &in) const
 {
-	List *list = new List();
 	QString line;
+	const char *name;
+	QSet< Contact * > *tmp = 0;
+
 	while (!(line = in.readLine()).isNull())
 	{
 		if (line.at(0).toAscii() == 'N')
 		{
-			const char *str = line.toAscii().constData();
-			list->setName(str + 3);
+			name = line.toAscii().constData() + 3;
 		}
 		else if (line.compare("CONTACTS") == 0)
 		{
-			QSet< Contact * > *tmp = readContacts(in);
-			for (QSet< Contact * >::iterator i = tmp->begin() ; i != tmp->end() ; ++i)
-			{
-				list->addContact(*i);
-			}
-			delete tmp;
+			tmp = readContacts(in);
 		}
 		else if (line.compare("END OF LIST") != 0)
 			throw MalformedFileException();
+	}
+
+	List *list = new List(name);
+	if (tmp)
+	{
+		for (QSet< Contact * >::iterator i = tmp->begin() ; i != tmp->end() ; ++i)
+		{
+			list->addContact(*i);
+		}
+		delete tmp;
 	}
 	return list;
 }

@@ -33,21 +33,22 @@ namespace CutiesBook
 	{
 	public:
 		//! Get the Company SIRET
-		long getSiret() const { return siret; }
+		int getSiret() const { return siret; }
 		//! Get the Company website
 		const QString &getWebsite() const { return website; }
 
 		//! Set the Company SIRET
-		void setSiret(long siret) { this->siret = siret; }
+		void setSiret(int siret) { this->siret = siret; }
 		//! Set the Company website
 		void setWebsite(QString &website) { this->website = website; }
 
-		Company(long siret, QString &website, QSet< Number * > &numbers, QString address = "", QString email = "");
+		Company(int siret, QString &website, QSet< Number * > &numbers, QString address = "", QString email = "");
+		Company(int siret, const char *website, const char *address, const char *email);
 		virtual ~Company();
 
 		ContactType getType() const { return COMPANY; }
 	private:
-		long siret;
+		int siret;
 		QString website;
 	};
 }

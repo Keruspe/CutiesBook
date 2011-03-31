@@ -42,12 +42,12 @@ namespace CutiesBook
 
 		//! Set the list name
 		void setName(QString &name) { this->name = name; }
-		void setName(const char *name) { this->name = QString(name); }
 
 		//! Get the list name
 		const QString &getName() const { return name; }
 
 		List(QString &name);
+		List(const char *name);
 		List();
 		virtual ~List();
 

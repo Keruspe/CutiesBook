@@ -39,8 +39,9 @@ List::List(QString &_name) :
 {
 }
 
-List::List() :
-	QObject()
+List::List(const char *_name) :
+	QObject(),
+	name(QString(_name))
 {
 }
 

@@ -20,6 +20,8 @@
 #ifndef __CUTIESBOOK_DIRECTORY_HPP__
 #define __CUTIESBOOK_DIRECTORY_HPP__
 
+#include "company.hpp"
+#include "individual.hpp"
 #include "list.hpp"
 
 #include <QTextStream>
@@ -83,6 +85,8 @@ namespace CutiesBook
 		void writeNumber(QTextStream &out, const Number *number) const;
 		void writeNumbers(QTextStream &out, const QSet< Number *> &numbers) const;
 		void writeDate(QTextStream &out, const QDate &date) const;
+		void writeCompany(QTextStream &out, const Company *company) const;
+		void writeIndividual(QTextStream &out, const Individual *individual) const;
 		void writeContact(QTextStream &out, const Contact *contact) const;
 		void writeContacts(QTextStream &out, const QSet< Contact * > &contacts) const;
 		void writeList(QTextStream &out, const List *list) const;
@@ -91,6 +95,8 @@ namespace CutiesBook
 		Number *readNumber(QTextStream &in) const;
 		QSet< Number * > *readNumbers(QTextStream &in) const;
 		QDate readDate(QTextStream &in) const;
+		Company *readCompany(QTextStream &in, const char *address, const char *email) const;
+		Individual *readIndividual(QTextStream &in, const char *address, const char *email) const;
 		Contact *readContact(QTextStream &in) const;
 		QSet< Contact * > *readContacts(QTextStream &in) const;
 		List *readList(QTextStream &in) const;

@@ -42,6 +42,13 @@ Contact::Contact(QSet< Number * > &_numbers, QString &_address, QString &_email)
 {
 }
 
+Contact::Contact(const char *address, const char *email) :
+	QObject(),
+	address(QString(address)),
+	email(QString(email))
+{
+}
+
 Contact::~Contact()
 {
 	for (QSet< Number * >::iterator i = numbers.begin() ; i != numbers.end() ; ++i)

@@ -38,7 +38,8 @@ namespace CutiesBook
 		enum ContactType
 		{
 			COMPANY,
-			INDIVIDUAL
+			INDIVIDUAL,
+			NONE
 		};
 
 		//! Add a number to the contact
@@ -50,7 +51,7 @@ namespace CutiesBook
 		const QString &getAddress() const { return address; }
 		//! Get the contact email
 		const QString &getEmail() const { return email; }
-		const QSet< Number * > getNumbers() const { return numbers; }
+		QSet< Number * > getNumbers() const { return numbers; }
 
 		//! Set the contact address
 		void setAddress(QString &address) { this->address = address; }
@@ -58,10 +59,11 @@ namespace CutiesBook
 		void setEmail(QString &email) { this->email = email; }
 
 		Contact(QSet< Number * > &numbers, QString &address, QString &email);
+		Contact(const char *address, const char *email);
 		virtual ~Contact();
 
 		//! Get the type of Contact
-		virtual ContactType getType() const = 0;
+		virtual ContactType getType() const { return NONE; };
 	private:
 		QSet< Number * > numbers;
 		QString address;

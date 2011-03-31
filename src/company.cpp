@@ -21,10 +21,17 @@
 
 using namespace CutiesBook;
 
-Company::Company(long _siret, QString &_website, QSet< Number * > &numbers, QString address, QString email) :
+Company::Company(int _siret, QString &_website, QSet< Number * > &numbers, QString address, QString email) :
 	Contact(numbers, address, email),
 	siret(_siret),
 	website(_website)
+{
+}
+
+Company::Company(int _siret, const char *_website, const char *address, const char *email) :
+	Contact(address, email),
+	siret(_siret),
+	website(QString(_website))
 {
 }
 
