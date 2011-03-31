@@ -23,6 +23,8 @@
 
 #include <QFile>
 
+#include <cstdlib>
+
 using namespace CutiesBook;
 
 Directory *Directory::instance = 0;
@@ -38,9 +40,23 @@ Directory::load(const QString &path)
 	while (!(line = in.readLine()).isNull())
 	{
 		if (line.compare("CONTACTS") == 0)
-			readContacts(in);
+		{
+			QSet< Contact * > *tmp = readContacts(in);
+			for (QSet< Contact * >::iterator i = tmp->begin() ; i != tmp->end() ; ++i)
+			{
+				contacts.insert(*i);
+			}
+			delete tmp;
+		}
 		else if (line.compare("LISTS") == 0)
-			readLists(in);
+		{
+			QSet< List * > *tmp = readLists(in);
+			for (QSet< List * >::iterator i = tmp->begin() ; i != tmp->end() ; ++i)
+			{
+				lists.insert(*i);
+			}
+			delete tmp;
+		}
 		else
 			throw MalformedFileException();
 	}
@@ -167,16 +183,32 @@ Directory::readNumbers(QTextStream &in) const
 	return numbers;
 }
 
-QDate *
+QDate
 Directory::readDate(QTextStream &in) const
 {
-	QDate *date = new QDate();
 	QString line;
+	int day;
+	int month;
+	int year;
 	while (!(line = in.readLine()).isNull())
 	{
-		throw MalformedFileException();
+		const char *str = line.toAscii().constData();
+		switch (str[0])
+		{
+		case 'D':
+			day = atoi(str + 3);
+			break;
+		case 'M':
+			month = atoi(str + 3);
+			break;
+		case 'Y':
+			year = atoi(str + 3);
+			break;
+		default:
+			throw MalformedFileException();
+		}
 	}
-	return date;
+	return QDate(year, month, day);
 }
 
 Contact *
@@ -200,10 +232,37 @@ Directory::readContacts(QTextStream &in) const
 	{
 		if (line.compare("CONTACT") == 0)
 			contacts->insert(readContact(in));
-		else if (line.compare("END OF CONTACT") != 0)
+		else if (line.compare("END OF CONTACTS") != 0)
 			throw MalformedFileException();
 	}
 	return contacts;
+}
+
+List *
+Directory::readList(QTextStream &in) const
+{
+	List *list = new List();
+	QString line;
+	while (!(line = in.readLine()).isNull())
+	{
+		if (line.at(0).toAscii() == 'N')
+		{
+			const char *str = line.toAscii().constData();
+			list->setName(str + 3);
+		}
+		else if (line.compare("CONTACTS") == 0)
+		{
+			QSet< Contact * > *tmp = readContacts(in);
+			for (QSet< Contact * >::iterator i = tmp->begin() ; i != tmp->end() ; ++i)
+			{
+				list->addContact(*i);
+			}
+			delete tmp;
+		}
+		else if (line.compare("END OF LIST") != 0)
+			throw MalformedFileException();
+	}
+	return list;
 }
 
 QSet< List * > *
@@ -213,7 +272,10 @@ Directory::readLists(QTextStream &in) const
 	QString line;
 	while (!(line = in.readLine()).isNull())
 	{
-		throw MalformedFileException();
+		if (line.compare("LIST") == 0)
+			lists->insert(readList(in));
+		else if (line.compare("END OF LISTS") != 0)
+			throw MalformedFileException();
 	}
 	return lists;
 }

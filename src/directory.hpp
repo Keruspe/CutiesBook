@@ -90,9 +90,10 @@ namespace CutiesBook
 
 		Number *readNumber(QTextStream &in) const;
 		QSet< Number * > *readNumbers(QTextStream &in) const;
-		QDate *readDate(QTextStream &in) const;
+		QDate readDate(QTextStream &in) const;
 		Contact *readContact(QTextStream &in) const;
 		QSet< Contact * > *readContacts(QTextStream &in) const;
+		List *readList(QTextStream &in) const;
 		QSet< List * > *readLists(QTextStream &in) const;
 
 		Directory();

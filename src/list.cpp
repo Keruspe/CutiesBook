@@ -39,6 +39,11 @@ List::List(QString &_name) :
 {
 }
 
+List::List() :
+	QObject()
+{
+}
+
 List::~List()
 {
 }
