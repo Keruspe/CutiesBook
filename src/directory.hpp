@@ -80,6 +80,9 @@ namespace CutiesBook
 		QSet< Contact * > contacts;
 		QSet< List * > lists;
 
+		void writeNumber(QTextStream &out, const Number *number) const;
+		void writeNumbers(QTextStream &out, const QSet< Number *> &numbers) const;
+		void writeDate(QTextStream &out, const QDate &date) const;
 		void writeContact(QTextStream &out, const Contact *contact) const;
 		void writeContacts(QTextStream &out, const QSet< Contact * > &contacts) const;
 

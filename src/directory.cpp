@@ -34,7 +34,8 @@ Directory::load(const QString &path)
 	if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
 		throw IOException();
 	QTextStream in(&file);
-	while (!(QString line = in.readLine()).isNull())
+	QString line;
+	while (!(line = in.readLine()).isNull())
 	{
 		if (line.compare("CONTACTS") == 0)
 			readContacts(in);
@@ -67,20 +68,39 @@ Directory::save(const QString &path)
 }
 
 void
+Directory::writeNumber(QTextStream &out, const Number *number) const
+{
+	out << "NUMBER\n";
+	out << "N: " << number->getNumber();
+	out << "T: " << number->getType();
+	out << "P: " << number->isProfessionnal();
+	out << "END OF NUMBER\n";
+}
+
+void
+Directory::writeNumbers(QTextStream &out, const QSet< Number *> &numbers) const
+{
+	out << "NUMBERS\n";
+	for (QSet< Number * >::const_iterator i = numbers.begin() ; i != numbers.end() ; ++i)
+	{
+		writeNumber(out, *i);
+	}
+	out << "END OF NUMBERS\n";
+}
+
+void
+Directory::writeDate(QTextStream &out, const QDate &date) const
+{
+	out << "D: " << date.day();
+	out << "M: " << date.month();
+	out << "Y: " << date.year();
+}
+
+void
 Directory::writeContact(QTextStream &out, const Contact *contact) const
 {
 	out << "CONTACT\n";
-	out << "NUMBERS\n";
-	out << "#: " << contact->getNumbers().size() << "\n";
-	for (QSet< Number * >::const_iterator i = contact->getNumbers().begin() ; i != contact->getNumbers().end() ; ++i)
-	{
-		out << "NUMBER\n";
-		out << "N: " << (*i)->getNumber();
-		out << "T: " << (*i)->getType();
-		out << "P: " << (*i)->isProfessionnal();
-		out << "END OF NUMBER\n";
-	}
-	out << "END OF NUMBERS\n";
+	writeNumbers(out, contact->getNumbers());
 	out << "A: " << contact->getAddress() << "\n";
 	out << "E: " << contact->getEmail() << "\n";
 	if (contact->getType() == Contact::COMPANY)
@@ -96,10 +116,7 @@ Directory::writeContact(QTextStream &out, const Contact *contact) const
 		const Individual *i = static_cast< const Individual * >(contact);
 		out << "L: " << i->getLastName() << "\n";
 		out << "F: " << i->getFirstName() << "\n";
-		const QDate &date = i->getBirthday();
-		out << "D: " << date.day();
-		out << "M: " << date.month();
-		out << "Y: " << date.year();
+		writeDate(out, i->getBirthday());
 	}
 	out << "END OF CONTACT\n";
 }
@@ -119,7 +136,8 @@ Directory::writeContacts(QTextStream &out, const QSet< Contact * > &contacts) co
 void
 Directory::readContact(QTextStream &in)
 {
-	while (!(QString line = in.readLine()).isNull())
+	QString line;
+	while (!(line = in.readLine()).isNull())
 	{
 		throw MalformedFileException();
 	}
@@ -128,7 +146,8 @@ Directory::readContact(QTextStream &in)
 void
 Directory::readContacts(QTextStream &in)
 {
-	while (!(QString line = in.readLine()).isNull())
+	QString line;
+	while (!(line = in.readLine()).isNull())
 	{
 		if (line.compare("CONTACT") == 0)
 			readContact(in);
@@ -140,6 +159,7 @@ Directory::readContacts(QTextStream &in)
 void
 Directory::readLists(QTextStream &in)
 {
+	(void) in;
 }
 
 void
