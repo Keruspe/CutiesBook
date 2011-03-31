@@ -40,19 +40,19 @@ Directory::load(const QString &path)
 	{
 		if (line.compare("CONTACTS") == 0)
 		{
-			QSet< Contact * > *tmp = readContacts(in);
-			for (QSet< Contact * >::iterator i = tmp->begin() ; i != tmp->end() ; ++i)
+			QList< Contact * > *tmp = readContacts(in);
+			for (QList< Contact * >::iterator i = tmp->begin() ; i != tmp->end() ; ++i)
 			{
-				contacts.insert(*i);
+				contacts.append(*i);
 			}
 			delete tmp;
 		}
 		else if (line.compare("LISTS") == 0)
 		{
-			QSet< List * > *tmp = readLists(in);
-			for (QSet< List * >::iterator i = tmp->begin() ; i != tmp->end() ; ++i)
+			QList< List * > *tmp = readLists(in);
+			for (QList< List * >::iterator i = tmp->begin() ; i != tmp->end() ; ++i)
 			{
-				lists.insert(*i);
+				lists.append(*i);
 			}
 			delete tmp;
 		}
@@ -140,10 +140,10 @@ Directory::writeContact(QTextStream &out, const Contact *contact) const
 }
 
 void
-Directory::writeContacts(QTextStream &out, const QSet< Contact * > &contacts) const
+Directory::writeContacts(QTextStream &out, const QList< Contact * > &contacts) const
 {
 	out << "CONTACTS\n";
-	for (QSet< Contact * >::const_iterator i = contacts.begin() ; i != contacts.end() ; ++i)
+	for (QList< Contact * >::const_iterator i = contacts.begin() ; i != contacts.end() ; ++i)
 	{
 		writeContact(out, *i);
 	}
@@ -160,10 +160,10 @@ Directory::writeList(QTextStream &out, const List *list) const
 }
 
 void
-Directory::writeLists(QTextStream &out, const QSet< List * > &lists) const
+Directory::writeLists(QTextStream &out, const QList< List * > &lists) const
 {
 	out << "LISTS\n";
-	for (QSet< List * >::const_iterator i = lists.begin() ; i != lists.end() ; ++i)
+	for (QList< List * >::const_iterator i = lists.begin() ; i != lists.end() ; ++i)
 	{
 		writeList(out, *i);
 	}
@@ -370,10 +370,10 @@ Directory::readContact(QTextStream &in) const
 	return contact;
 }
 
-QSet< Contact * > *
+QList< Contact * > *
 Directory::readContacts(QTextStream &in) const
 {
-	QSet< Contact * > *contacts = new QSet< Contact * >();
+	QList< Contact * > *contacts = new QList< Contact * >();
 	QString line;
 	while (!(line = in.readLine()).isNull())
 	{
@@ -422,10 +422,10 @@ Directory::readList(QTextStream &in) const
 	return list;
 }
 
-QSet< List * > *
+QList< List * > *
 Directory::readLists(QTextStream &in) const
 {
-	QSet< List * > *lists = new QSet< List * >();
+	QList< List * > *lists = new QList< List * >();
 	QString line;
 	while (!(line = in.readLine()).isNull())
 	{
@@ -442,14 +442,14 @@ Directory::readLists(QTextStream &in) const
 void
 Directory::addContact(Contact *contact)
 {
-	contacts.insert(contact);
+	contacts.append(contact);
 }
 
 void
 Directory::deleteContact(Contact *contact)
 {
-	contacts.remove(contact);
-	for (QSet< List * >::iterator i = lists.begin() ; i != lists.end() ; ++i)
+	contacts.removeOne(contact);
+	for (QList< List * >::iterator i = lists.begin() ; i != lists.end() ; ++i)
 	{
 		(*i)->deleteContact(contact);
 	}
@@ -459,13 +459,13 @@ Directory::deleteContact(Contact *contact)
 void
 Directory::addList(List *list)
 {
-	lists.insert(list);
+	lists.append(list);
 }
 
 void
 Directory::deleteList(List *list)
 {
-	lists.remove(list);
+	lists.removeOne(list);
 	delete list;
 }
 
@@ -486,7 +486,7 @@ Directory::data(const QModelIndex &index, int role) const
 {
 	if ( ( ! index.isValid() ) || ( role != Qt::DisplayRole ) )
 		return QVariant();
-	Contact *contact = contacts.toList().at(index.row());
+	Contact *contact = contacts.at(index.row());
 	Individual *individual = 0;
 	Company *company = 0;
 	switch ( contact->getType() )
@@ -575,19 +575,29 @@ Directory::headerData(int section, Qt::Orientation orientation, int role) const
 		return QVariant();
 	}
 }
+void
+Directory::sort(int column, Qt::SortOrder order)
+{
+	Q_UNUSED(column);
+	Q_UNUSED(order);
+	/*
+	 * TODO: implement a sort algorithm
+	 */
+}
 
 Directory::Directory() :
 	QAbstractTableModel()
 {
+	sort(FIRSTNAME, Qt::AscendingOrder);
 }
 
 Directory::~Directory()
 {
-	for (QSet< Contact * >::iterator i = contacts.begin() ; i != contacts.end() ; ++i)
+	for (QList< Contact * >::iterator i = contacts.begin() ; i != contacts.end() ; ++i)
 	{
 		delete *i;
 	}
-	for (QSet< List * >::iterator i = lists.begin() ; i != lists.end() ; ++i)
+	for (QList< List * >::iterator i = lists.begin() ; i != lists.end() ; ++i)
 	{
 		delete *i;
 	}

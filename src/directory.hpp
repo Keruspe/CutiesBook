@@ -61,7 +61,7 @@ namespace CutiesBook
 		void save(const QString &path);
 
 		//! Get the contacts list
-		const QSet< Contact * > &getContacts() const { return contacts; }
+		const QList< Contact * > &getContacts() const { return contacts; }
 
 		//! Add a contact
 		void addContact(Contact *contact);
@@ -70,7 +70,7 @@ namespace CutiesBook
 		void deleteContact(Contact *contact);
 
 		//! Get the lists
-		const QSet< List * > &getLists() const { return lists; }
+		const QList< List * > &getLists() const { return lists; }
 
 		//! Add a list
 		void addList(List *list);
@@ -83,6 +83,7 @@ namespace CutiesBook
 		int columnCount(const QModelIndex &parent = QModelIndex()) const;
 		QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
 		QVariant headerData(int section, Qt::Orientation orientation, int role) const;
+		void sort(int column, Qt::SortOrder order);
 
 	private:
 		enum {
@@ -98,8 +99,8 @@ namespace CutiesBook
 		} Columns;
 
 		static Directory *instance;
-		QSet< Contact * > contacts;
-		QSet< List * > lists;
+		QList< Contact * > contacts;
+		QList< List * > lists;
 
 		void writeNumber(QTextStream &out, const Number *number) const;
 		void writeNumbers(QTextStream &out, const QSet< Number *> &numbers) const;
@@ -107,9 +108,9 @@ namespace CutiesBook
 		void writeCompany(QTextStream &out, const Company *company) const;
 		void writeIndividual(QTextStream &out, const Individual *individual) const;
 		void writeContact(QTextStream &out, const Contact *contact) const;
-		void writeContacts(QTextStream &out, const QSet< Contact * > &contacts) const;
+		void writeContacts(QTextStream &out, const QList< Contact * > &contacts) const;
 		void writeList(QTextStream &out, const List *list) const;
-		void writeLists(QTextStream &out, const QSet< List * > &lists) const;
+		void writeLists(QTextStream &out, const QList< List * > &lists) const;
 
 		Number *readNumber(QTextStream &in) const;
 		QSet< Number * > *readNumbers(QTextStream &in) const;
@@ -117,9 +118,9 @@ namespace CutiesBook
 		Company *readCompany(QTextStream &in, QString address, QString email) const;
 		Individual *readIndividual(QTextStream &in, QString address, QString email) const;
 		Contact *readContact(QTextStream &in) const;
-		QSet< Contact * > *readContacts(QTextStream &in) const;
+		QList< Contact * > *readContacts(QTextStream &in) const;
 		List *readList(QTextStream &in) const;
-		QSet< List * > *readLists(QTextStream &in) const;
+		QList< List * > *readLists(QTextStream &in) const;
 
 		Directory();
 		virtual ~Directory();

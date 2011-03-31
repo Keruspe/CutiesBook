@@ -24,13 +24,13 @@ using namespace CutiesBook;
 void
 List::addContact(Contact *contact)
 {
-	contacts.insert(contact);
+	contacts.append(contact);
 }
 
 void
 List::deleteContact(Contact *contact)
 {
-	contacts.remove(contact);
+	contacts.removeOne(contact);
 }
 
 List::List(QString _name) :
