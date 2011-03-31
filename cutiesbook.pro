@@ -17,7 +17,8 @@ SOURCES += \
 	src/list.cpp \
 	src/mainwindow.cpp \
 	src/main.cpp \
-	src/number.cpp
+	src/number.cpp \
+	src/widgets.cpp
 
 HEADERS += \
 	src/application.hpp \
@@ -27,7 +28,8 @@ HEADERS += \
 	src/individual.hpp \
 	src/list.hpp \
 	src/mainwindow.hpp \
-	src/number.hpp
+	src/number.hpp \
+	src/widgets.hpp
 
 
 unix {
