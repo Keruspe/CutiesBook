@@ -20,7 +20,10 @@
 #ifndef __CUTIESBOOK_MAINWINDOW_HPP__
 #define __CUTIESBOOK_MAINWINDOW_HPP__
 
+#include "widgets.hpp"
+
 #include <QMainWindow>
+#include <QAction>
 
 //! The main window class
 namespace CutiesBook
@@ -45,6 +48,9 @@ namespace CutiesBook
 
 	private:
 		static MainWindow *instance;
+
+		QAction *quit;
+		ListWidget *centralWidget;
 
 		MainWindow();
 		~MainWindow();

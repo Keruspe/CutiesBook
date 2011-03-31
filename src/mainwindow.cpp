@@ -19,7 +19,6 @@
 
 #include "mainwindow.hpp"
 
-#include <QAction>
 #include <QMenuBar>
 #include <QMenu>
 
@@ -28,16 +27,23 @@ using namespace CutiesBook;
 MainWindow *MainWindow::instance = 0;
 
 MainWindow::MainWindow() :
-	QMainWindow(0)
+	QMainWindow(0),
+	quit(0)
 {
-	QAction *quit = new QAction(tr("&Quit"), this);
+	QMenu *mainMenu = menuBar()->addMenu("&CutiesBook");
+
+	quit = new QAction(tr("&Quit"), this);
 	quit->setShortcuts(QKeySequence::Quit);
 	quit->setStatusTip(tr("Quit the application"));
 	connect(quit, SIGNAL(triggered()), this, SLOT(close()));
-	QMenu *menu = menuBar()->addMenu("&CutiesBook");
-	menu->addAction(quit);
+	mainMenu->addAction(quit);
+
+	centralWidget = new ListWidget(this);
+	setCentralWidget(centralWidget);
 }
 
 MainWindow::~MainWindow()
 {
+	delete centralWidget;
+	delete quit;
 }
