@@ -19,6 +19,11 @@
 
 #include "application.hpp"
 
+#include <QProcessEnvironment>
+
+#include "directory.hpp"
+#include "individual.hpp"
+
 using namespace CutiesBook;
 
 Application *Application::instance = 0;
@@ -27,25 +32,45 @@ Application::Application(int &argc, char *argv[]) :
 	QApplication(argc, argv),
 	mainWindow(0)
 {
+
+	QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+	QString file = env.value("HOME");
+	file += ".local/var/cutiesbook/directory";
+
+	/*
+	 * Load the existing book
+	 */
+	Directory *directory = Directory::getInstance();
+	//directory->load(file);
+	for ( int i = 0 ; i < 60 ; ++i )
+	{
+		QString last("Contact");
+		QString first("Number");
+		first += QString::number(i);
+		QDate date(1970, 1, 1);
+		QSet< Number * > *n = new QSet<Number *>();
+		QString add("Nowhere");
+		QString email("plop@example.com");
+		directory->addContact(new Individual(last, first, date, *n, QString("Nowhere"), QString("plop@example.com")));
+	}
+
 	/*
 	 * Create the main window
 	 */
 	this->mainWindow = MainWindow::getInstance();
 	this->mainWindow->show();
-
-	/*
-	 * Load the existing book
-	 */
 }
 
 Application::~Application()
 {
-	/*
-	 * Save the book
-	 */
 
 	/*
 	 * Clean the main window
 	 */
 	MainWindow::cleanInstance();
+
+	/*
+	 * Save the book
+	 */
+	Directory::cleanInstance();
 }
