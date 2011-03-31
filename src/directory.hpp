@@ -86,9 +86,12 @@ namespace CutiesBook
 		void writeContact(QTextStream &out, const Contact *contact) const;
 		void writeContacts(QTextStream &out, const QSet< Contact * > &contacts) const;
 
-		void readContact(QTextStream &in);
-		void readContacts(QTextStream &in);
-		void readLists(QTextStream &in);
+		Number *readNumber(QTextStream &in) const;
+		QSet< Number * > *readNumbers(QTextStream &in) const;
+		QDate *readDate(QTextStream &in) const;
+		Contact *readContact(QTextStream &in) const;
+		QSet< Contact * > *readContacts(QTextStream &in) const;
+		QSet< List * > *readLists(QTextStream &in) const;
 
 		Directory();
 		virtual ~Directory();

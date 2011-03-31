@@ -133,33 +133,79 @@ Directory::writeContacts(QTextStream &out, const QSet< Contact * > &contacts) co
 	out << "END OF CONTACTS\n";
 }
 
-void
-Directory::readContact(QTextStream &in)
+Number *
+Directory::readNumber(QTextStream &in) const
 {
+	Number *number = new Number();
 	QString line;
 	while (!(line = in.readLine()).isNull())
 	{
 		throw MalformedFileException();
 	}
+	return number;
 }
 
-void
-Directory::readContacts(QTextStream &in)
+QSet< Number * > &
+readNumbers(QTextStream &in) const
 {
+	QSet< Number * > numbers = new QSet< Number * >();
+	QString line;
+	while (!(line = in.readLine()).isNull())
+	{
+		throw MalformedFileException();
+	}
+	return numbers;
+}
+
+QDate *
+readDate(QTextStream &in) const
+{
+	QDate *date = new QDate();
+	QString line;
+	while (!(line = in.readLine()).isNull())
+	{
+		throw MalformedFileException();
+	}
+	return date;
+}
+
+Contact *
+Directory::readContact(QTextStream &in) const
+{
+	Contact *contact = new Contact();
+	QString line;
+	while (!(line = in.readLine()).isNull())
+	{
+		throw MalformedFileException();
+	}
+	return contact;
+}
+
+QSet< Contact * > *
+Directory::readContacts(QTextStream &in) const
+{
+	QSet< Contact * > *contacts = new QSet< Contacts * >();
 	QString line;
 	while (!(line = in.readLine()).isNull())
 	{
 		if (line.compare("CONTACT") == 0)
-			readContact(in);
+			contacts->insert(readContact(in));
 		else if (line.compare("END OF CONTACT") != 0)
 			throw MalformedFileException();
 	}
+	return contacts;
 }
 
-void
-Directory::readLists(QTextStream &in)
+QSet< List * > *
+Directory::readLists(QTextStream &in) const
 {
-	(void) in;
+	QSet< List * > *lists = new QSet< List * >();
+	QString line;
+	while (!(line = in.readLine()).isNull())
+	{
+		throw MalformedFileException();
+	}
+	return lists;
 }
 
 void
