@@ -33,15 +33,9 @@ List::deleteContact(Contact *contact)
 	contacts.remove(contact);
 }
 
-List::List(QString &_name) :
+List::List(QString _name) :
 	QObject(),
 	name(_name)
-{
-}
-
-List::List(const char *_name) :
-	QObject(),
-	name(QString(_name))
 {
 }
 

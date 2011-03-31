@@ -34,18 +34,10 @@ Contact::deleteNumber(Number *number)
 	delete number;
 }
 
-Contact::Contact(QSet< Number * > &_numbers, QString &_address, QString &_email) :
+Contact::Contact(QString _address, QString _email) :
 	QObject(),
-	numbers(_numbers),
 	address(_address),
 	email(_email)
-{
-}
-
-Contact::Contact(const char *address, const char *email) :
-	QObject(),
-	address(QString(address)),
-	email(QString(email))
 {
 }
 

@@ -58,8 +58,7 @@ namespace CutiesBook
 		//! Set the contact email
 		void setEmail(QString &email) { this->email = email; }
 
-		Contact(QSet< Number * > &numbers, QString &address, QString &email);
-		Contact(const char *address, const char *email);
+		Contact(QString address, QString email);
 		virtual ~Contact();
 
 		//! Get the type of Contact

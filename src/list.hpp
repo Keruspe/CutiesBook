@@ -46,9 +46,7 @@ namespace CutiesBook
 		//! Get the list name
 		const QString &getName() const { return name; }
 
-		List(QString &name);
-		List(const char *name);
-		List();
+		List(QString name);
 		virtual ~List();
 
 	private:

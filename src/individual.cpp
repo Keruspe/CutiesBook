@@ -21,18 +21,10 @@
 
 using namespace CutiesBook;
 
-Individual::Individual(QString &_lastName, QString &_firstName, QDate _birthday, QSet< Number * > &numbers, QString address, QString email) :
-	Contact(numbers, address, email),
+Individual::Individual(QString _lastName, QString _firstName, QDate _birthday, QString address, QString email) :
+	Contact(address, email),
 	lastName(_lastName),
 	firstName(_firstName),
-	birthday(_birthday)
-{
-}
-
-Individual::Individual(const char *_lastName, const char *_firstName, QDate _birthday, const char *address, const char *email) :
-	Contact(address, email),
-	lastName(QString(_lastName)),
-	firstName(QString(_firstName)),
 	birthday(_birthday)
 {
 }

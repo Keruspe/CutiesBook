@@ -254,7 +254,7 @@ Directory::readDate(QTextStream &in) const
 }
 
 Company *
-Directory::readCompany(QTextStream &in, const char *address, const char *email) const
+Directory::readCompany(QTextStream &in, QString address, QString email) const
 {
 	QString line;
 	int siret;
@@ -284,7 +284,7 @@ Directory::readCompany(QTextStream &in, const char *address, const char *email) 
 }
 
 Individual *
-Directory::readIndividual(QTextStream &in, const char *address, const char *email) const
+Directory::readIndividual(QTextStream &in, QString address, QString email) const
 {
 	QString line;
 	const char *lastName, *firstName;

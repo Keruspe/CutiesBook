@@ -48,10 +48,9 @@ Application::Application(int &argc, char *argv[]) :
 		QString first("Number");
 		first += QString::number(i);
 		QDate date(1970, 1, 1);
-		QSet< Number * > *n = new QSet<Number *>();
 		QString add("Nowhere");
 		QString email("plop@example.com");
-		directory->addContact(new Individual(last, first, date, *n, QString("Nowhere"), QString("plop@example.com")));
+		directory->addContact(new Individual(last, first, date, QString("Nowhere"), QString("plop@example.com")));
 	}
 	directory->save(file);
 

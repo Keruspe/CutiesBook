@@ -42,8 +42,7 @@ namespace CutiesBook
 		//! Set the Company website
 		void setWebsite(QString &website) { this->website = website; }
 
-		Company(int siret, QString &website, QSet< Number * > &numbers, QString address = "", QString email = "");
-		Company(int siret, const char *website, const char *address, const char *email);
+		Company(int siret, QString website, QString address = "", QString email = "");
 		virtual ~Company();
 
 		ContactType getType() const { return COMPANY; }

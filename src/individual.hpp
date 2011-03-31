@@ -48,8 +48,7 @@ namespace CutiesBook
 		//! Set the Individual birthday
 		void setBirthday(QDate &birthday) { this->birthday = birthday; }
 
-		Individual(QString &lastName, QString &firstName, QDate birthday, QSet< Number * > &numbers, QString address = "", QString email = "");
-		Individual(const char *lastName, const char *firstName, QDate birthday, const char *address, const char *email);
+		Individual(QString lastName, QString firstName, QDate birthday, QString address = "", QString email = "");
 		virtual ~Individual();
 
 		ContactType getType() const { return INDIVIDUAL; }
