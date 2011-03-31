@@ -34,6 +34,15 @@ Directory::load(const QString &path)
 	if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
 		throw IOException();
 	QTextStream in(&file);
+	while (!(QString line = in.readLine()).isNull())
+	{
+		if (line.compare("CONTACTS") == 0)
+			readContacts(in);
+		else if (line.compare("LISTS") == 0)
+			readLists(in);
+		else
+			throw MalformedFileException();
+	}
 }
 
 void
@@ -105,6 +114,32 @@ Directory::writeContacts(QTextStream &out, const QSet< Contact * > &contacts) co
 		writeContact(out, *i);
 	}
 	out << "END OF CONTACTS\n";
+}
+
+void
+Directory::readContact(QTextStream &in)
+{
+	while (!(QString line = in.readLine()).isNull())
+	{
+		throw MalformedFileException();
+	}
+}
+
+void
+Directory::readContacts(QTextStream &in)
+{
+	while (!(QString line = in.readLine()).isNull())
+	{
+		if (line.compare("CONTACT") == 0)
+			readContact(in);
+		else if (line.compare("END OF CONTACT") != 0)
+			throw MalformedFileException();
+	}
+}
+
+void
+Directory::readLists(QTextStream &in)
+{
 }
 
 void

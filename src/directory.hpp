@@ -31,6 +31,7 @@
 namespace CutiesBook
 {
 	class IOException {};
+	class MalformedFileException {};
 
 	class Directory : public QObject
 	{
@@ -81,6 +82,10 @@ namespace CutiesBook
 
 		void writeContact(QTextStream &out, const Contact *contact) const;
 		void writeContacts(QTextStream &out, const QSet< Contact * > &contacts) const;
+
+		void readContact(QTextStream &in);
+		void readContacts(QTextStream &in);
+		void readLists(QTextStream &in);
 
 		Directory();
 		virtual ~Directory();
