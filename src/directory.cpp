@@ -483,6 +483,8 @@ Directory::data(const QModelIndex &index, int role) const
 		case Contact::COMPANY:
 			company = (Company *)contact;
 		break;
+		case Contact::NONE:
+		break;
 	}
 	switch ( index.column() )
 	{
