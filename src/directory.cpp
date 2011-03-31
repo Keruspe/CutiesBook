@@ -175,7 +175,7 @@ Directory::readNumber(QTextStream &in) const
 {
 	QString line;
 	Number::PhoneType type;
-	const char *number;
+	QString number;
 	bool professionnal;
 	while (!(line = in.readLine()).isNull())
 	{
@@ -187,7 +187,7 @@ Directory::readNumber(QTextStream &in) const
 			switch (str[0])
 			{
 			case 'N':
-				number = str + 3;
+				number = QString(str + 3);
 				break;
 			case 'T':
 				type = static_cast<Number::PhoneType>(atoi(str + 3));
@@ -258,7 +258,7 @@ Directory::readCompany(QTextStream &in, QString address, QString email) const
 {
 	QString line;
 	int siret;
-	const char *website;
+	QString website;
 	while (!(line = in.readLine()).isNull())
 	{
 		if (line.compare("END OF CONTACT") == 0)
@@ -269,7 +269,7 @@ Directory::readCompany(QTextStream &in, QString address, QString email) const
 			switch (str[0])
 			{
 			case 'W':
-				website = str + 3;
+				website = QString(str + 3);
 				break;
 			case 'S':
 				siret = atoi(str + 3);
@@ -287,7 +287,7 @@ Individual *
 Directory::readIndividual(QTextStream &in, QString address, QString email) const
 {
 	QString line;
-	const char *lastName, *firstName;
+	QString lastName, firstName;
 	QDate birthday;
 	while (!(line = in.readLine()).isNull())
 	{
@@ -301,10 +301,10 @@ Directory::readIndividual(QTextStream &in, QString address, QString email) const
 			switch (str[0])
 			{
 			case 'L':
-				lastName = str + 3;
+				lastName = QString(str + 3);
 				break;
 			case 'F':
-				firstName = str + 3;
+				firstName = QString(str + 3);
 				break;
 			default:
 				throw MalformedFileException();
@@ -321,7 +321,7 @@ Directory::readContact(QTextStream &in) const
 	Contact::ContactType type = Contact::NONE;
 	QString line;
 	QSet< Number * > *numbers = 0;
-	const char *address, *email;
+	QString address, email;
 	while (!(line = in.readLine()).isNull())
 	{
 		if (line.compare("INDIVIDUAL") == 0)
@@ -344,10 +344,10 @@ Directory::readContact(QTextStream &in) const
 			switch (str[0])
 			{
 			case 'A':
-				address = str + 3;
+				address = QString(str + 3);
 				break;
 			case 'E':
-				email = str + 3;
+				email = QString(str + 3);
 				break;
 			default:
 				throw MalformedFileException();
@@ -393,14 +393,14 @@ List *
 Directory::readList(QTextStream &in) const
 {
 	QString line;
-	const char *name;
+	QString name;
 	QSet< Contact * > *tmp = 0;
 
 	while (!(line = in.readLine()).isNull())
 	{
 		if (line.at(0).toAscii() == 'N')
 		{
-			name = line.toAscii().constData() + 3;
+			name = QString(line.toAscii().constData() + 3);
 		}
 		else if (line.compare("CONTACTS") == 0)
 		{
