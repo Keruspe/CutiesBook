@@ -97,9 +97,11 @@ Directory::writeNumbers(QTextStream &out, const QSet< Number *> &numbers) const
 void
 Directory::writeDate(QTextStream &out, const QDate &date) const
 {
-	out << "D: " << date.day();
-	out << "M: " << date.month();
-	out << "Y: " << date.year();
+	out << "DATE\n";
+	out << "D: " << date.day() << "\n";
+	out << "M: " << date.month() << "\n";
+	out << "Y: " << date.year() << "\n";
+	out << "END OF DATE\n";
 }
 
 void
@@ -177,7 +179,9 @@ Directory::readNumber(QTextStream &in) const
 	bool professionnal;
 	while (!(line = in.readLine()).isNull())
 	{
-		if (line.compare("END OF NUMBER") != 0)
+		if (line.compare("END OF NUMBER") == 0)
+			break;
+		else
 		{
 			const char *str = line.toAscii().constData();
 			switch (str[0])
@@ -208,7 +212,9 @@ Directory::readNumbers(QTextStream &in) const
 	{
 		if (line.compare("NUMBER") == 0)
 			numbers->insert(readNumber(in));
-		else if (line.compare("END OF NUMBERS") != 0)
+		else if (line.compare("END OF NUMBERS") == 0)
+			break;
+		else
 			throw MalformedFileException();
 	}
 	return numbers;
@@ -223,7 +229,9 @@ Directory::readDate(QTextStream &in) const
 	int year;
 	while (!(line = in.readLine()).isNull())
 	{
-		if (line.compare("END OF DATE") != 0)
+		if (line.compare("END OF DATE") == 0)
+			break;
+		else
 		{
 			const char *str = line.toAscii().constData();
 			switch (str[0])
@@ -253,7 +261,9 @@ Directory::readCompany(QTextStream &in, const char *address, const char *email) 
 	const char *website;
 	while (!(line = in.readLine()).isNull())
 	{
-		if (line.compare("END OF CONTACT") != 0)
+		if (line.compare("END OF CONTACT") == 0)
+			break;
+		else
 		{
 			const char *str = line.toAscii().constData();
 			switch (str[0])
@@ -282,10 +292,10 @@ Directory::readIndividual(QTextStream &in, const char *address, const char *emai
 	while (!(line = in.readLine()).isNull())
 	{
 		if (line.compare("DATE") == 0)
-		{
 			birthday = readDate(in);
-		}
-		else if (line.compare("END OF CONTACT") != 0)
+		else if (line.compare("END OF CONTACT") == 0)
+			break;
+		else
 		{
 			const char *str = line.toAscii().constData();
 			switch (str[0])
@@ -325,10 +335,10 @@ Directory::readContact(QTextStream &in) const
 			break;
 		}
 		else if (line.compare("NUMBERS") == 0)
-		{
 			numbers = readNumbers(in);
-		}
-		else if (line.compare("END OF CONTACT") != 0)
+		else if (line.compare("END OF CONTACT") == 0)
+			break;
+		else
 		{
 			const char *str = line.toAscii().constData();
 			switch (str[0])
@@ -371,7 +381,9 @@ Directory::readContacts(QTextStream &in) const
 	{
 		if (line.compare("CONTACT") == 0)
 			contacts->insert(readContact(in));
-		else if (line.compare("END OF CONTACTS") != 0)
+		else if (line.compare("END OF CONTACTS") == 0)
+			break;
+		else
 			throw MalformedFileException();
 	}
 	return contacts;
@@ -394,7 +406,9 @@ Directory::readList(QTextStream &in) const
 		{
 			tmp = readContacts(in);
 		}
-		else if (line.compare("END OF LIST") != 0)
+		else if (line.compare("END OF LIST") == 0)
+			break;
+		else
 			throw MalformedFileException();
 	}
 
@@ -419,7 +433,9 @@ Directory::readLists(QTextStream &in) const
 	{
 		if (line.compare("LIST") == 0)
 			lists->insert(readList(in));
-		else if (line.compare("END OF LISTS") != 0)
+		else if (line.compare("END OF LISTS") == 0)
+			break;
+		else
 			throw MalformedFileException();
 	}
 	return lists;
