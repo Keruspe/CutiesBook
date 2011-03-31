@@ -41,8 +41,8 @@ Application::Application(int &argc, char *argv[]) :
 	 * Load the existing book
 	 */
 	Directory *directory = Directory::getInstance();
-	//directory->load(file);
-	for ( int i = 0 ; i < 60 ; ++i )
+	directory->load(file);
+	/*for ( int i = 0 ; i < 60 ; ++i )
 	{
 		QString last("Contact");
 		QString first("Number");
@@ -51,7 +51,7 @@ Application::Application(int &argc, char *argv[]) :
 		QString add("Nowhere");
 		QString email("plop@example.com");
 		directory->addContact(new Individual(last, first, date, add, email));
-	}
+	}*/
 	directory->save(file);
 
 	/*

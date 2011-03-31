@@ -187,7 +187,7 @@ Directory::readNumber(QTextStream &in) const
 			switch (str[0])
 			{
 			case 'N':
-				number = QString(str + 3);
+				number = line.mid(3);
 				break;
 			case 'T':
 				type = static_cast<Number::PhoneType>(atoi(str + 3));
@@ -269,7 +269,7 @@ Directory::readCompany(QTextStream &in, QString address, QString email) const
 			switch (str[0])
 			{
 			case 'W':
-				website = QString(str + 3);
+				website = line.mid(3);
 				break;
 			case 'S':
 				siret = atoi(str + 3);
@@ -297,14 +297,13 @@ Directory::readIndividual(QTextStream &in, QString address, QString email) const
 			break;
 		else
 		{
-			const char *str = line.toAscii().constData();
-			switch (str[0])
+			switch (line.at(0).toAscii())
 			{
 			case 'L':
-				lastName = QString(str + 3);
+				lastName = line.mid(3);
 				break;
 			case 'F':
-				firstName = QString(str + 3);
+				firstName = line.mid(3);
 				break;
 			default:
 				throw MalformedFileException();
@@ -340,14 +339,13 @@ Directory::readContact(QTextStream &in) const
 			break;
 		else
 		{
-			const char *str = line.toAscii().constData();
-			switch (str[0])
+			switch (line.at(0).toAscii())
 			{
 			case 'A':
-				address = QString(str + 3);
+				address = line.mid(3);
 				break;
 			case 'E':
-				email = QString(str + 3);
+				email = line.mid(3);
 				break;
 			default:
 				throw MalformedFileException();
