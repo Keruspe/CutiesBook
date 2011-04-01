@@ -25,6 +25,7 @@
 
 using namespace CutiesBook;
 
+
 void
 ListWidget::deleteContacts()
 {
@@ -37,8 +38,7 @@ ListWidget::deleteContacts()
 	QList<int> listIndexes(indexes.toList());
 	qSort(listIndexes.begin(), listIndexes.end(), qGreater<int>());
 	while ( ! listIndexes.isEmpty() )
-		directory->deleteContact(directory->getContacts().at(listIndexes.takeFirst()));
-	reset();
+		directory->deleteContactAt(listIndexes.takeFirst());
 }
 
 ListWidget::ListWidget(QWidget *window) :
