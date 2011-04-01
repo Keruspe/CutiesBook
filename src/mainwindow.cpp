@@ -26,6 +26,16 @@ using namespace CutiesBook;
 
 MainWindow *MainWindow::instance = 0;
 
+void
+MainWindow::addContactSlot()
+{
+}
+
+void
+MainWindow::removeContactSlot()
+{
+}
+
 MainWindow::MainWindow() :
 	QMainWindow(0),
 	toolbar(0),
@@ -38,12 +48,12 @@ MainWindow::MainWindow() :
 
 	addContact = new QAction(tr("&New Contact"), this);
 	addContact->setStatusTip(tr("Add a new contact"));
-	connect(addContact, SIGNAL(triggered()), this, SLOT(addContact()));
+	connect(addContact, SIGNAL(triggered()), this, SLOT(addContactSlot()));
 	toolbar->addAction(addContact);
 
 	deleteContact = new QAction(tr("&Delete Contact"), this);
 	deleteContact->setStatusTip(tr("Delete a contact"));
-	connect(deleteContact, SIGNAL(triggered()), this, SLOT(removeContact()));
+	connect(deleteContact, SIGNAL(triggered()), this, SLOT(removeContactSlot()));
 	toolbar->addAction(deleteContact);
 
 	quit = new QAction(tr("&Quit"), this);

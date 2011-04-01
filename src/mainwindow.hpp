@@ -31,6 +31,8 @@ namespace CutiesBook
 {
 	class MainWindow : public QMainWindow
 	{
+		Q_OBJECT
+
 	public:
 		//! Instance getter
 		static MainWindow *getInstance()
@@ -46,6 +48,10 @@ namespace CutiesBook
 			if ( MainWindow::instance )
 				delete MainWindow::instance;
 		}
+
+	private slots:
+		void addContactSlot();
+		void removeContactSlot();
 
 	private:
 		static MainWindow *instance;
