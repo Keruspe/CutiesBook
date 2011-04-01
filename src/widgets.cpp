@@ -19,32 +19,20 @@
 
 #include "widgets.hpp"
 
-#include "mainwindow.hpp"
 #include "directory.hpp"
-
-#include <QString>
-#include <QDebug>
 
 using namespace CutiesBook;
 
 ListWidget::ListWidget(QWidget *window) :
-	QTableView(window),
-	header(0),
-	contacts()
+	QTableView(window)
 {
 	setSortingEnabled(true);
 
-	header = new QHeaderView(Qt::Vertical, this);
-	setVerticalHeader(header);
+	Directory *directory = Directory::getInstance();
 
-	setModel(Directory::getInstance());
+	setModel(directory);
 }
 
 ListWidget::~ListWidget()
 {
-	while ( ! contacts.isEmpty() )
-	{
-		delete contacts.first();
-		contacts.pop_front();
-	}
 }

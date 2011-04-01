@@ -21,11 +21,7 @@
 #define __CUTIESBOOK_WIDGETS_HPP__
 
 #include <QTableView>
-#include <QHeaderView>
 #include <QWidget>
-#include <QVector>
-#include <QBoxLayout>
-#include <QLabel>
 
 //! The list widget
 namespace CutiesBook
@@ -36,10 +32,6 @@ namespace CutiesBook
 		//! Constructor
 		ListWidget(QWidget *window);
 		~ListWidget();
-
-	private:
-		QHeaderView *header;
-		QVector<QWidget *> contacts;
 	};
 }
 
