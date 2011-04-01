@@ -49,6 +49,8 @@ ListWidget::ListWidget(QWidget *window) :
 
 	setModel(directory);
 
+	directory->sort(0, Qt::AscendingOrder);
+
 	connect(directory, SIGNAL(sorted()), this, SLOT(reset()));
 }
 
