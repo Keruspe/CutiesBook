@@ -23,15 +23,25 @@
 #include <QTableView>
 #include <QWidget>
 
+#include "directory.hpp"
+
 //! The list widget
 namespace CutiesBook
 {
 	class ListWidget : public QTableView
 	{
+		Q_OBJECT
+
 	public:
 		//! Constructor
 		ListWidget(QWidget *window);
 		~ListWidget();
+
+	public slots:
+		void deleteContacts();
+
+	private:
+		Directory *directory;
 	};
 }
 

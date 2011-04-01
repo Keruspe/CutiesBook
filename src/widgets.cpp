@@ -19,16 +19,33 @@
 
 #include "widgets.hpp"
 
-#include "directory.hpp"
+#include <QSet>
+#include <QList>
+#include <QtAlgorithms>
 
 using namespace CutiesBook;
 
+void
+ListWidget::deleteContacts()
+{
+	QModelIndexList list = selectedIndexes();
+	QSet<int> indexes;
+	for ( int i = 0, e = list.size() ; i < e ; ++i )
+	{
+		indexes.insert(list.at(i).row());
+	}
+	QList<int> listIndexes(indexes.toList());
+	qSort(listIndexes.begin(), listIndexes.end(), qGreater<int>());
+	while ( ! listIndexes.isEmpty() )
+		directory->deleteContact(directory->getContacts().at(listIndexes.takeFirst()));
+	reset();
+}
+
 ListWidget::ListWidget(QWidget *window) :
-	QTableView(window)
+	QTableView(window),
+	directory(Directory::getInstance())
 {
 	setSortingEnabled(true);
-
-	Directory *directory = Directory::getInstance();
 
 	setModel(directory);
 

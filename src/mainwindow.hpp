@@ -51,7 +51,6 @@ namespace CutiesBook
 
 	private slots:
 		void addContactSlot();
-		void removeContactSlot();
 
 	private:
 		static MainWindow *instance;

@@ -31,11 +31,6 @@ MainWindow::addContactSlot()
 {
 }
 
-void
-MainWindow::removeContactSlot()
-{
-}
-
 MainWindow::MainWindow() :
 	QMainWindow(0),
 	toolbar(0),
@@ -43,6 +38,9 @@ MainWindow::MainWindow() :
 	deleteContact(0),
 	quit(0)
 {
+	centralWidget = new ListWidget(this);
+	setCentralWidget(centralWidget);
+
 	toolbar = new QToolBar("Tools", this);
 	addToolBar(toolbar);
 
@@ -53,7 +51,7 @@ MainWindow::MainWindow() :
 
 	deleteContact = new QAction(tr("&Delete Contact"), this);
 	deleteContact->setStatusTip(tr("Delete a contact"));
-	connect(deleteContact, SIGNAL(triggered()), this, SLOT(removeContactSlot()));
+	connect(deleteContact, SIGNAL(triggered()), centralWidget, SLOT(deleteContacts()));
 	toolbar->addAction(deleteContact);
 
 	quit = new QAction(tr("&Quit"), this);
@@ -61,9 +59,6 @@ MainWindow::MainWindow() :
 	quit->setStatusTip(tr("Quit the application"));
 	connect(quit, SIGNAL(triggered()), this, SLOT(close()));
 	toolbar->addAction(quit);
-
-	centralWidget = new ListWidget(this);
-	setCentralWidget(centralWidget);
 }
 
 MainWindow::~MainWindow()
