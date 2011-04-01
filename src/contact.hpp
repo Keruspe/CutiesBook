@@ -51,7 +51,10 @@ namespace CutiesBook
 		const QString &getAddress() const { return address; }
 		//! Get the contact email
 		const QString &getEmail() const { return email; }
+		//! Get the contact numbers as \a QSet<Number *>
 		QSet< Number * > getNumbers() const { return numbers; }
+		//! Get the contact numbers as \a QString
+		QString getNumbersString() const;
 
 		//! Set the contact address
 		void setAddress(QString &address) { this->address = address; }

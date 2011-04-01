@@ -34,6 +34,20 @@ Contact::deleteNumber(Number *number)
 	delete number;
 }
 
+QString
+Contact::getNumbersString() const
+{
+	QString ret("");
+	for (QSet< Number * >::const_iterator i = numbers.begin(),
+		e = numbers.end() ; i != e ; ++i)
+	{
+		ret += (*i)->toString();
+		if ( i != e )
+			ret += "\n";
+	}
+	return ret;
+}
+
 Contact::Contact(QString _address, QString _email) :
 	QObject(),
 	address(_address),
