@@ -23,6 +23,7 @@
 #include "mainwindow.hpp"
 
 #include <QApplication>
+#include <QString>
 
 //! The main application class
 /*!
@@ -54,6 +55,7 @@ namespace CutiesBook
 	private:
 		static Application *instance;
 		MainWindow *mainWindow;
+		QString file;
 
 		Application(int &argc, char *argv[]);
 		~Application();

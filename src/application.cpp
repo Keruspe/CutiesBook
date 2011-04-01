@@ -30,39 +30,18 @@ Application *Application::instance = 0;
 
 Application::Application(int &argc, char *argv[]) :
 	QApplication(argc, argv),
-	mainWindow(0)
+	mainWindow(0),
+	file()
 {
 
 	QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-	QString file = env.value("HOME");
+	file = env.value("HOME");
 	file += "/.local/var/cutiesbook/directory";
 
 	/*
 	 * Load the existing book
 	 */
-	Directory *directory = Directory::getInstance();
-	directory->load(file);
-	/*
-	for ( int i = 0 ; i < 60 ; ++i )
-	{
-		QString last("Contact");
-		QString first("Number");
-		first += QString::number(i);
-		QDate date(1970, 1, 1);
-		QString add("Nowhere");
-		QString email("plop@example.com");
-		Individual *i = new Individual(last, first, date, add, email);
-		Number *n = new Number("555-9574", Number::MOBILE, true);
-		Number *n2 = new Number("++555-9574", Number::FIXE, false);
-		i->addNumber(n);
-		i->addNumber(n2);
-		directory->addContact(i);
-	}
-	QString website("foobar.org");
-	int siret = 42;
-	directory->addContact(new Company(siret, website));
-	*/
-	directory->save(file);
+	Directory::getInstance()->load(file);
 
 	/*
 	 * Create the main window
@@ -82,5 +61,6 @@ Application::~Application()
 	/*
 	 * Save the book
 	 */
+	Directory::getInstance()->save(file);
 	Directory::cleanInstance();
 }
