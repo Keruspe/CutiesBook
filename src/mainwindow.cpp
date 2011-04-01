@@ -28,15 +28,29 @@ MainWindow *MainWindow::instance = 0;
 
 MainWindow::MainWindow() :
 	QMainWindow(0),
+	toolbar(0),
+	addContact(0),
+	deleteContact(0),
 	quit(0)
 {
-	QMenu *mainMenu = menuBar()->addMenu("&CutiesBook");
+	toolbar = new QToolBar("Tools", this);
+	addToolBar(toolbar);
+
+	addContact = new QAction(tr("&New Contact"), this);
+	addContact->setStatusTip(tr("Add a new contact"));
+	connect(addContact, SIGNAL(triggered()), this, SLOT(addContact()));
+	toolbar->addAction(addContact);
+
+	deleteContact = new QAction(tr("&Delete Contact"), this);
+	deleteContact->setStatusTip(tr("Delete a contact"));
+	connect(deleteContact, SIGNAL(triggered()), this, SLOT(removeContact()));
+	toolbar->addAction(deleteContact);
 
 	quit = new QAction(tr("&Quit"), this);
 	quit->setShortcuts(QKeySequence::Quit);
 	quit->setStatusTip(tr("Quit the application"));
 	connect(quit, SIGNAL(triggered()), this, SLOT(close()));
-	mainMenu->addAction(quit);
+	toolbar->addAction(quit);
 
 	centralWidget = new ListWidget(this);
 	setCentralWidget(centralWidget);
@@ -45,5 +59,7 @@ MainWindow::MainWindow() :
 MainWindow::~MainWindow()
 {
 	delete centralWidget;
+	delete addContact;
+	delete deleteContact;
 	delete quit;
 }

@@ -23,6 +23,7 @@
 #include "widgets.hpp"
 
 #include <QMainWindow>
+#include <QToolBar>
 #include <QAction>
 
 //! The main window class
@@ -49,6 +50,9 @@ namespace CutiesBook
 	private:
 		static MainWindow *instance;
 
+		QToolBar *toolbar;
+		QAction *addContact;
+		QAction *deleteContact;
 		QAction *quit;
 		ListWidget *centralWidget;
 
