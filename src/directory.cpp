@@ -500,35 +500,34 @@ Directory::data(const QModelIndex &index, int role) const
 		case Contact::NONE:
 		break;
 	}
+	QString na("N/A");
 	switch ( index.column() )
 	{
 		/* Individual */
 		case FIRSTNAME:
 			if ( !individual )
-				break;
+				return na;
 			return individual->getFirstName();
 		case LASTNAME:
 			if ( !individual )
-				break;
+				return na;
 			return individual->getLastName();
 		case DATE:
 			if ( !individual )
-				break;
+				return na;
 			return individual->getBirthday();
 		/* Company */
 		case SIRET:
 			if ( !company )
-				break;
-			//return company->getSiret();
-		return QVariant();
+				return na;
+			return company->getSiret();
 		case WEBSITE:
 			if ( !company )
-				break;
+				return na;
 			return company->getWebsite();
 		/* Common */
 		case NUMBERS:
-			//return contact->getNumbers();
-		return QVariant();
+			return contact->getNumbersString();
 		case ADDRESS:
 			return contact->getAddress();
 		case EMAIL:
