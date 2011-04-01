@@ -69,7 +69,6 @@ namespace CutiesBook
 		void addContact(Contact *contact);
 
 		//! Delete a contact
-		void deleteContact(Contact *contact);
 		void deleteContactAt(int i);
 
 		//! Get the lists
@@ -127,6 +126,8 @@ namespace CutiesBook
 		QList< Contact * > *readContacts(QTextStream &in) const;
 		List *readList(QTextStream &in) const;
 		QList< List * > *readLists(QTextStream &in) const;
+
+		void deleteContact(Contact *contact);
 
 		static int sortColumn;
 		static Qt::SortOrder sortOrder;
