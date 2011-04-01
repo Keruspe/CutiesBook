@@ -13,6 +13,7 @@ SOURCES += \
 	src/company.cpp \
 	src/contact.cpp \
 	src/directory.cpp \
+	src/dialogs.cpp \
 	src/individual.cpp \
 	src/list.cpp \
 	src/mainwindow.cpp \
@@ -25,6 +26,7 @@ HEADERS += \
 	src/company.hpp \
 	src/contact.hpp \
 	src/directory.hpp \
+	src/dialogs.hpp \
 	src/individual.hpp \
 	src/list.hpp \
 	src/mainwindow.hpp \
