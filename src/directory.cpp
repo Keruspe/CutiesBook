@@ -633,33 +633,23 @@ Directory::contactOrder(Contact *c1, Contact *c2)
 	{
 		/* Individual */
 		case FIRSTNAME:
-			if ( !in1 && in2 )
-				ret = true;
-			else if ( in1 && in2 )
+			if ( in1 && in2 )
 				ret = ( in1->getFirstName() < in2->getFirstName() );
 		break;
 		case LASTNAME:
-			if ( !in1 && in2 )
-				ret = true;
-			else if ( in1 && in2 )
+			if ( in1 && in2 )
 				ret = ( in1->getLastName() < in2->getLastName() );
 		break;
 		case DATE:
-			if ( !in1 && in2 )
-				ret = true;
-			else if ( in1 && in2 )
+			if ( in1 && in2 )
 				ret = ( in1->getBirthday() < in2->getBirthday() );
 		break;
 		/* Company */
 		case SIRET:
-			if ( !cp1 && cp2 )
-				ret = true;
-			else if ( cp1 && cp2 )
+			if ( cp1 && cp2 )
 				ret = ( cp1->getSiret() < cp2->getSiret() );
 		case WEBSITE:
-			if ( !cp1 && cp2 )
-				ret = true;
-			else if ( cp1 && cp2 )
+			if ( cp1 && cp2 )
 				ret = ( cp1->getWebsite() < cp2->getWebsite() );
 		break;
 		/* Common */
