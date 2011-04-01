@@ -21,6 +21,28 @@
 
 using namespace CutiesBook;
 
+QString
+Number::toString() const
+{
+	QString ret("");
+	switch ( type )
+	{
+		case FIXE:
+			ret += "Tel.: ";
+		break;
+		case MOBILE:
+			ret += "Cel.: ";
+		break;
+		case FAX:
+			ret += "Fax: ";
+		break;
+	}
+	ret += number;
+	if ( professionnal )
+		ret += " (pro)";
+	return ret;
+}
+
 Number::Number(QString _number, Number::PhoneType _type, bool _professionnal) :
 	QObject(),
 	number(_number),
@@ -32,4 +54,3 @@ Number::Number(QString _number, Number::PhoneType _type, bool _professionnal) :
 Number::~Number()
 {
 }
-

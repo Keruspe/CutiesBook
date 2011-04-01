@@ -22,6 +22,7 @@
 
 #include <QObject>
 #include <QString>
+#include <QAbstractItemDelegate>
 
 //! The number class
 /*!
@@ -60,6 +61,9 @@ namespace CutiesBook
 		void setNumber(QString &number) { this->number = number; }
 		//! Set the type of this phone number
 		void setType(PhoneType type) { this->type = type; }
+
+		//! Get the number as \a QString
+		QString toString() const;
 
 		Number(QString number, PhoneType type, bool professional = false);
 		virtual ~Number();
