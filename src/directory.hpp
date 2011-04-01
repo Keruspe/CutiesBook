@@ -70,6 +70,7 @@ namespace CutiesBook
 
 		//! Delete a contact
 		void deleteContact(Contact *contact);
+		void deleteContactAt(int i);
 
 		//! Get the lists
 		const QList< List * > &getLists() const { return lists; }

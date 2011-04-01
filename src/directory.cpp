@@ -443,7 +443,10 @@ Directory::readLists(QTextStream &in) const
 void
 Directory::addContact(Contact *contact)
 {
+	int i = contacts.size();
+	beginInsertRows(QModelIndex(), i ,i);
 	contacts.append(contact);
+	endInsertRows();
 }
 
 void
@@ -455,6 +458,15 @@ Directory::deleteContact(Contact *contact)
 		(*i)->deleteContact(contact);
 	}
 	delete contact;
+}
+
+void
+Directory::deleteContactAt(int i)
+{
+	Contact *c = contacts.takeAt(i);
+	beginRemoveRows(QModelIndex(), i, i);
+	deleteContact(c);
+	endRemoveRows();
 }
 
 void
