@@ -23,8 +23,11 @@
 #include "widgets.hpp"
 
 #include <QMainWindow>
+#include <QDialog>
 #include <QToolBar>
 #include <QAction>
+
+#include "dialogs.hpp"
 
 //! The main window class
 namespace CutiesBook
@@ -49,11 +52,17 @@ namespace CutiesBook
 				delete MainWindow::instance;
 		}
 
+	signals:
+		void addContactSignal(QDialog *);
+
 	private slots:
 		void addContactSlot();
+		void addContactFinishedSlot();
 
 	private:
 		static MainWindow *instance;
+
+		AddContactDialog *addContactDialog;
 
 		QToolBar *toolbar;
 		QAction *addContact;
